@@ -15,7 +15,6 @@ const port = process.env.PORT
 // Connection to DB
 connectDB()
 
-
 // Middlewares
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))

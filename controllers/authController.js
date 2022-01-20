@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const UserModel = require('../models/userModel')
 
@@ -29,6 +30,21 @@ const createNewUser = async(req, res) => {
     }
 }
 
+const logUser = async(req, res) => {
+    // Check if email exists
+    const user =  await UserModel.findOne({ email: req.body.email })
+    if(!user) return res.status(400).send({ message: "Email or password is wrong" })
+
+    // Check if password is correct
+    const validPassword = await bcrypt.compare(req.body.password, user.password)
+    if(!validPassword) res.status(400).send({ message: "Email or password is wrong" })
+
+    // Create and assign token
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, { expiresIn: "24h" })
+    res.header('auth-token').send({ token: token})
+}
+
 module.exports = {
-    createNewUser
+    createNewUser,
+    logUser
 }
