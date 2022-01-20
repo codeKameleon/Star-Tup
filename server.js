@@ -22,8 +22,47 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 // Routes
+
+// Register / Login / Logout
 app.use('/api/account', authRoutes)
+
+// Users
 app.use('/api/users', userRoutes)
+
+
+// API Documentation
+app.get('/api', (req, res) => res.send({
+    message: "Welcome on the Star Tup API",
+    endpoints: [
+        {
+            route: "/api/users",
+            method: "GET",
+            description: "list all users"
+        },
+        {
+            route: "/api/conversations",
+            method: "GET",
+            description: "list all conversations of a user"
+        },
+        {
+            route: "/api/conversations",
+            method: "GET",
+            description: "list all conversations of a user"
+        },
+        {
+            route: "/api/conversations/:id",
+            method: "POST",
+            description: "send message to a conversation"
+        },
+        {
+            route: "/api/conversations/:id",
+            method: "GET",
+            description: "retrieve message from a conversation"
+        },
+    ]
+}))
+
+app.get('/', (req, res) => res.redirect('/api'))
 
 // Server
 app.listen(port, () => console.log(`Server started and running at http://localhost:${port}`))
