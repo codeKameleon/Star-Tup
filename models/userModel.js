@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     },
     birthdate : {
         type: Date,
+        trim: true,
         require: true
     },
     motto : {
