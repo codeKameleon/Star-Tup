@@ -3,16 +3,13 @@ const mongoose = require('mongoose')
 const messageSchema = new mongoose.Schema({
     conversationId: {
         type: String,
-        required: true,
         unique: true
     },
     sender: {
-        type: String, 
-        required: true
+        type: String
     },
     content : {
-        type: String,
-        required: true
+        type: String
     }
 }) 
 
