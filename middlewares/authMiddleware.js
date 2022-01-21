@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 const verifyToken = (req, res, next) =>  {
-    const token = req.header('auth-token')
+    const token = req.cookies.jwt
 
     if(!token) return res.status(401).send({ message: "Access Denied" })
 
@@ -13,6 +13,7 @@ const verifyToken = (req, res, next) =>  {
         next()
     } catch(error) {
         console.log(error)
+        res.cookie('jwt', '', { maxAge: 1})
         res.status(400).send({ message: "Invalid Token" })
     }
 }
