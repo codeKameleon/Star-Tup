@@ -44,12 +44,7 @@ const logUser = async(req, res) => {
     res.header('auth-token').send({ token: token })
 }
 
-const logOutUser = async(req, res) => {
-    res.redirect('/')
-}
-
 module.exports = {
     createNewUser,
-    logUser,
-    logOutUser
+    logUser
 }

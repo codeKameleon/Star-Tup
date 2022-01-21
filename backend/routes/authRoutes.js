@@ -17,9 +17,5 @@ router.post('/register', createNewUser)
 // @route GET /api/account/login
 router.post('/login', logUser)
 
-// @description LOG an existing user
-// @route GET /api/account/logout
-router.get('/logout', logOutUser)
-
 
 module.exports = router
