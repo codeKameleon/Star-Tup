@@ -1,7 +1,7 @@
 const UserModel = require('../models/userModel')
 
 const getAllUsers = async(req, res) => {
-    try{
+    try {
         const users = await UserModel.find({})
         .select("-password")
         .select("-lastname")

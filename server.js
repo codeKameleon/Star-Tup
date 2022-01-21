@@ -7,6 +7,7 @@ const connectDB = require('./config/db')
 
 const authRoutes  = require('./routes/authRoutes')
 const userRoutes  = require('./routes/userRoutes')
+const conversationRoutes  = require('./routes/conversationRoutes')
 
 // Set up environment variables
 dotenv.config()
@@ -31,6 +32,8 @@ app.use('/api/account', authRoutes)
 // Users
 app.use('/api/users', userRoutes)
 
+// Conversations
+app.use('/api/conversations', conversationRoutes)
 
 // API Documentation
 app.get('/api', (req, res) => res.send({

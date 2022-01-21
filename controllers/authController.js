@@ -43,7 +43,7 @@ const logUser = async(req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, { expiresIn: "24h" })
     const maxAge = 24 * 60 * 60 * 1000
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge })
-    res.header('auth-token').send({ token: token })
+    res.header('auth-token').send({ token: token, user_id: user._id})
 }
 
 const logOutUser =  async(req, res) => {
