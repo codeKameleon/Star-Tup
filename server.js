@@ -35,6 +35,32 @@ app.get('/api', (req, res) => res.send({
     message: "Welcome on the Star Tup API",
     endpoints: [
         {
+            route: "/api/account/register",
+            method: "POST",
+            description: "register a user",
+            required_fields: [
+                'firstname',
+                'lastname',
+                'birthdate',
+                'email',
+                'password'
+            ]
+        },
+        {
+            route: "/api/account/login",
+            method: "POST",
+            description: "log a user",
+            required_fields: [
+                'email',
+                'password'
+            ]
+        },
+        {
+            route: "/api/account/logout",
+            method: "GET",
+            description: "log out a user"
+        },
+        {
             route: "/api/users",
             method: "GET",
             description: "list all users"
