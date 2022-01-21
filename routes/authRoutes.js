@@ -2,8 +2,7 @@ const express =  require('express')
 
 const { 
     createNewUser, 
-    logUser,
-    logOutUser
+    logUser
 } = require('../controllers/authController')
 
 const router =  express.Router()
@@ -14,8 +13,7 @@ const router =  express.Router()
 router.post('/register', createNewUser)
 
 // @description LOG an existing user
-// @route GET /api/account/login
+// @route POST /api/account/login
 router.post('/login', logUser)
-
 
 module.exports = router
