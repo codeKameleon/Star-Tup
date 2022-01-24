@@ -8,6 +8,7 @@ const connectDB = require('./config/db')
 const authRoutes  = require('./routes/authRoutes')
 const userRoutes  = require('./routes/userRoutes')
 const conversationRoutes  = require('./routes/conversationRoutes')
+const messageRoutes  = require('./routes/messageRoutes')
 
 // Set up environment variables
 dotenv.config()
@@ -23,7 +24,7 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser())
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 
 // Routes
 
@@ -35,6 +36,9 @@ app.use('/api/users', userRoutes)
 
 // Conversations
 app.use('/api/conversations', conversationRoutes)
+
+// Messages
+app.use('/api/messages', messageRoutes)
 
 // API Documentation
 app.get('/api', (req, res) => res.send({
