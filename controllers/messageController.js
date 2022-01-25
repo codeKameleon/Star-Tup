@@ -9,8 +9,6 @@ const createNewMessage = async(req, res) => {
             content: req.body.content
         })
 
-        console.log(req.params.id)
-
         const savedMessage = await newMessage.save()
 
         const conversation = await ConversationModel.findByIdAndUpdate(
@@ -19,7 +17,7 @@ const createNewMessage = async(req, res) => {
             { new: true }
         )
 
-        res.send({message: savedMessage, conversation: conversation})
+        res.status(200).send({ message: savedMessage, conversation: conversation })
     } catch(error) {
         console.log(error)
         res.status(400).send({ message: "Bad request" })

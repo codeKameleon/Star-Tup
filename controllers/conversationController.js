@@ -3,10 +3,9 @@ const ConversationModel = require('../models/conversationModel')
 const getConversations = async(req, res) => {
     try {
         const conversations = await ConversationModel.find({senderId: req.user._id })
-        .select('-_id')
-        .populate("receiverId", 'firstname')
+        .populate('receiverId', 'firstname')
         
-        res.send(conversations)
+        res.status(200).send(conversations)
     } catch(error) {
         console.log(error)
         res.status(400).send({ message: "Bad request" })
@@ -16,9 +15,9 @@ const getConversations = async(req, res) => {
 const getConversationById = async(req, res) => {
     try {
         const conversation = await ConversationModel.findById(req.params.id)
-        .populate("receiverId")
+        .populate('receiverId', 'firstname')
         
-        res.send(conversation)
+        res.status(200).send(conversation)
     } catch(error) {
         console.log(error)
         res.status(400).send({ message: "Bad request" })
@@ -34,9 +33,8 @@ const createNewConversation = async(req, res) => {
 
         const savedConversation = await newConversation.save()
 
-        res.send({conversation: savedConversation, sender : req.user._id})
+        res.status(200).send(savedConversation)
     } catch(error) {
-        console.log('failed')
         console.log(error)
         res.status(400).send({ message: "Bad request" })
     }
