@@ -1,5 +1,4 @@
 const ConversationModel = require('../models/conversationModel')
-const UserModel = require('../models/userModel')
 
 const getConversations = async(req, res) => {
     try {
