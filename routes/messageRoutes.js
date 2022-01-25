@@ -7,7 +7,7 @@ const router =  express.Router()
 
 // @description POST a conversation
 // @route POST /api/conversations
-router.post('/', verifyToken, createNewMessage)
+router.post('/:id', verifyToken, createNewMessage)
 
 
 module.exports = router

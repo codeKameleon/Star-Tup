@@ -1,8 +1,13 @@
 const MessageModel = require('../models/messageModel')
 
+// Serch in conversation model the id
+// in this conversation update the messages array with
+// the info
+
 const createNewMessage = async(req, res) => {
-    try{
+    try {
         const newMessage = new MessageModel({
+            conversationId: req.params.id,
             sender: req.user._id,
             content: req.body.content
         })

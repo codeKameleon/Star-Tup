@@ -12,7 +12,7 @@ const getConversations = async(req, res) => {
 }
 
 const getConversationById = async(req, res) => {
-    try{
+    try {
         const conversation = await ConversationModel.findById(req.params.id)
         
         res.send(conversation)
