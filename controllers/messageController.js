@@ -1,3 +1,4 @@
+const ConversationModel = require('../models/conversationModel')
 const MessageModel = require('../models/messageModel')
 
 const createNewMessage = async(req, res) => {
@@ -8,9 +9,17 @@ const createNewMessage = async(req, res) => {
             content: req.body.content
         })
 
+        console.log(req.params.id)
+
         const savedMessage = await newMessage.save()
 
-        res.send(savedMessage)
+        const conversation = await ConversationModel.findByIdAndUpdate(
+            req.params.id,
+            { $push: { messages: savedMessage }},
+            { new: true }
+        )
+
+        res.send({message: savedMessage, conversation: conversation})
     } catch(error) {
         console.log(error)
         res.status(400).send({ message: "Bad request" })

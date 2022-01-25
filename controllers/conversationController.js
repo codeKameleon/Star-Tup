@@ -2,7 +2,7 @@ const ConversationModel = require('../models/conversationModel')
 
 const getConversations = async(req, res) => {
     try{
-        const conversations = await ConversationModel.find({senderId: req.user._id})
+        const conversations = await ConversationModel.find({senderId: req.user._id } || {receiverId: req.user._id})
         
         res.send(conversations)
     } catch(error) {
@@ -12,7 +12,7 @@ const getConversations = async(req, res) => {
 }
 
 const getConversationById = async(req, res) => {
-    try {
+    try{
         const conversation = await ConversationModel.findById(req.params.id)
         
         res.send(conversation)

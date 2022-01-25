@@ -13,6 +13,18 @@ const getAllUsers = async(req, res) => {
     }
 }
 
+const getUserById = async(req, res) => {
+    try{
+        const user = await UserModel.findById(req.params.id)
+        
+        res.send(user)
+    } catch(error) {
+        console.log(error)
+        res.status(400).send({ message: "Bad request" })
+    }
+}
+
 module.exports = { 
-    getAllUsers
+    getAllUsers,
+    getUserById
 }

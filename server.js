@@ -24,7 +24,7 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser())
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 
 // Routes
 
@@ -76,9 +76,9 @@ app.get('/api', (req, res) => res.send({
             description: "list all users"
         },
         {
-            route: "/api/conversations",
+            route: "/api/users/:id",
             method: "GET",
-            description: "list all conversations of a user"
+            description: "get one user"
         },
         {
             route: "/api/conversations",
@@ -86,15 +86,21 @@ app.get('/api', (req, res) => res.send({
             description: "list all conversations of a user"
         },
         {
-            route: "/api/conversations/:id",
+            route: "/api/conversations",
             method: "POST",
-            description: "send message to a conversation"
+            description: "create a new conversation",
+            required_fields: [
+                'receiverId'
+            ]
         },
         {
-            route: "/api/conversations/:id",
-            method: "GET",
-            description: "retrieve message from a conversation"
-        },
+            route: "/api/messages/:id",
+            method: "POST",
+            description: "send message to a conversation",
+            required_fields: [
+                'content'
+            ]
+        }
     ]
 }))
 
