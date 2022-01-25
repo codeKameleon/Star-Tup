@@ -1,8 +1,11 @@
 const ConversationModel = require('../models/conversationModel')
+const UserModel = require('../models/userModel')
 
 const getConversations = async(req, res) => {
-    try{
-        const conversations = await ConversationModel.find({senderId: req.user._id } || {receiverId: req.user._id})
+    try {
+        const conversations = await ConversationModel.find({senderId: req.user._id })
+        .select('-_id')
+        .populate("receiverId", 'firstname')
         
         res.send(conversations)
     } catch(error) {
@@ -12,8 +15,9 @@ const getConversations = async(req, res) => {
 }
 
 const getConversationById = async(req, res) => {
-    try{
+    try {
         const conversation = await ConversationModel.findById(req.params.id)
+        .populate("receiverId")
         
         res.send(conversation)
     } catch(error) {
@@ -23,7 +27,7 @@ const getConversationById = async(req, res) => {
 }
 
 const createNewConversation = async(req, res) => {
-    try{
+    try {
         const newConversation = new ConversationModel({
             senderId: req.user._id,
             receiverId: req.body.receiverId

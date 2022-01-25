@@ -1,12 +1,14 @@
 const mongoose = require('mongoose')
+const ObjectID = require("mongoose").Types.ObjectId
 
 const conversationSchema = new mongoose.Schema({
     senderId: {
-        type: String
+        type: ObjectID,
+        ref: 'users'
     },
     receiverId: {
-        type: String,
-        unique: true
+        type: ObjectID,
+        ref: 'users'
     },
     messages : {
         type: Array

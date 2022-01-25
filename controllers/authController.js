@@ -44,7 +44,7 @@ const logUser = async(req, res) => {
     const maxAge = 24 * 60 * 60 * 1000
     // res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge }) 
     res.cookie('jwt', token, { httpOnly: true, sameSite: 'none', secure: true, maxAge: maxAge })
-    res.header('auth-token').send({ token: token, user_id: user._id})
+    // res.header('auth-token').send({ token: token, user_id: user._id})
 }
 
 const logOutUser =  async(req, res) => {
