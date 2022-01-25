@@ -48,6 +48,7 @@ const logUser = async(req, res) => {
 }
 
 const logOutUser =  async(req, res) => {
+    // remove data req.user
     res.cookie('jwt', '', { maxAge: 1 })
     res.send({message: "Session expired"})
 }
