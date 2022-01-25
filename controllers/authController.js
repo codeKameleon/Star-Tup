@@ -31,6 +31,7 @@ const createNewUser = async(req, res) => {
 }
 
 const logUser = async(req, res) => {
+    try {
     // Check if email exists
     const user =  await UserModel.findOne({ email: req.body.email })
     if(!user) return res.status(400).send({ message: "Email or password is wrong" })
@@ -44,7 +45,10 @@ const logUser = async(req, res) => {
     const maxAge = 24 * 60 * 60 * 1000
     // res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge }) 
     res.cookie('jwt', token, { httpOnly: true, sameSite: 'none', secure: true, maxAge: maxAge })
-    // res.header('auth-token').send({ token: token, user_id: user._id})
+    res.header('auth-token').send({ token: token, user_id: user._id})
+    } catch(error) {
+        return res.status(400).send(error)
+    }
 }
 
 const logOutUser =  async(req, res) => {
