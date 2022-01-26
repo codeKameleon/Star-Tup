@@ -26,6 +26,13 @@ const getConversationById = async(req, res) => {
 
 const createNewConversation = async(req, res) => {
     try {
+    // Check if the conversation already exists
+    const conversation = await ConversationModel.findOne({
+        members: { $all: [req.user._id, req.body] } 
+    })
+    if (conversation) return res.status(400).send({ message: "Conversation already exists" })
+
+    // Create new conversation
         const newConversation = new ConversationModel({
             members: [req.user._id, req.body]
         })

@@ -1,23 +1,28 @@
-const ConversationModel = require('../models/conversationModel')
 const MessageModel = require('../models/messageModel')
+
+const getMessages  = async(req, res) => {
+    try {
+        const messages = await MessageModel.find({
+            conversationId: req.params.conversationId
+        })
+        res.status(200).send(messages)
+
+    } catch(error) {
+        res.status(400).send({message: "This conversation does not exist"})
+    }
+}
 
 const createNewMessage = async(req, res) => {
     try {
         const newMessage = new MessageModel({
-            conversationId: req.params.id,
+            conversationId: req.params.conversationId,
             sender: req.user._id,
             content: req.body.content
         })
 
         const savedMessage = await newMessage.save()
 
-        const conversation = await ConversationModel.findByIdAndUpdate(
-            req.params.id,
-            { $push: { messages: savedMessage }},
-            { new: true }
-        )
-
-        res.status(200).send({ message: savedMessage, conversation: conversation })
+        res.status(200).send(savedMessage)
     } catch(error) {
         console.log(error)
         res.status(400).send({ message: "Bad request" })
@@ -26,26 +31,22 @@ const createNewMessage = async(req, res) => {
 
 const deleteMessage = async(req, res) => {
     try {
-        const messageToDelete = {
-            messages: {
-                _id: req.params.msg_id,
-            }
-        }
-    
-        const conversationUpdated = await ConversationModel.findOneAndUpdate(
-            { members: { $all: [req.user._id] }, _id: req.params.conv_id },
-            { $pull: messageToDelete },
-            { new: true }
-        ).populate('members', 'firstname')
-        res.status(200).send(conversationUpdated)
+        const message =  await MessageModel.findById(req.params.id)
+
+        // Check if the message to delete has been sent by the authenticated user
+        if(message.sender != req.user._id) return res.status(400).send({ message: "You are not allowed to delete this message" })
+
+        const deleteMessage = await MessageModel.findByIdAndDelete(req.params.id)
+        res.status(200).send(deleteMessage)
 
     } catch(error) {
         console.log(error)
-        res.status(400).send(error)
+        res.status(400).send({ message: "You don't have the rights to delete this message" })
     }
 }
 
 module.exports = { 
     createNewMessage,
+    getMessages,
     deleteMessage
 }

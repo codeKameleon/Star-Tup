@@ -3,7 +3,8 @@ const ObjectID = require("mongoose").Types.ObjectId
 
 const messageSchema = new mongoose.Schema({
     conversationId: {
-        type: ObjectID
+        type: ObjectID,
+        ref: 'conversations'
     },
     sender: {
         type: String
