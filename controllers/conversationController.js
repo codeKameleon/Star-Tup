@@ -33,7 +33,7 @@ const createNewConversation = async(req, res) => {
     try {
     // Check if the body request is a valid ObjectId
     const ObjectID = mongoose.Types.ObjectId
-    if(!ObjectID.isValid(req.body)) return res.status(400).send({ message: "User id is not valid" })
+    if(!ObjectID.isValid(req.body[0])) return res.status(400).send({ message: "User id is not valid" })
 
     // Check if the conversation already exists
     const conversation = await ConversationModel.findOne({
