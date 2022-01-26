@@ -44,7 +44,7 @@ const logUser = async(req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, { expiresIn: "24h" })
     const maxAge = 24 * 60 * 60 * 1000
     res.cookie('jwt', token, { httpOnly: true, sameSite: 'none', secure: true, maxAge: maxAge })
-    res.header('auth-token').send({ token: token, user_id: user._id})
+    res.header('auth-token').send({ token: token, user_id: user._id })
     } catch(error) {
         return res.status(400).send(error)
     }
@@ -52,7 +52,7 @@ const logUser = async(req, res) => {
 
 const logOutUser =  async(req, res) => {
     res.cookie('jwt', '', { maxAge: 1 })
-    res.send({message: "Session expired"})
+    res.send({ message: "Session expired" })
 }
 
 module.exports = {

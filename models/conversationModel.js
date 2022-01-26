@@ -6,9 +6,10 @@ const conversationSchema = new mongoose.Schema({
         type: ObjectID,
         ref: 'users'
     }],
-    messages: {
-        type: Array
-    }
+    messages: [{
+        type: ObjectID,
+        ref: 'conversations'
+    }],
 }) 
 
 const ConversationModel = mongoose.model('conversations', conversationSchema)

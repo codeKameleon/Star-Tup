@@ -24,6 +24,28 @@ const createNewMessage = async(req, res) => {
     }
 }
 
+const deleteMessage = async(req, res) => {
+    try {
+        const messageToDelete = {
+            messages: {
+                _id: req.params.msg_id,
+            }
+        }
+    
+        const conversationUpdated = await ConversationModel.findOneAndUpdate(
+            { members: { $all: [req.user._id] }, _id: req.params.conv_id },
+            { $pull: messageToDelete },
+            { new: true }
+        ).populate('members', 'firstname')
+        res.status(200).send(conversationUpdated)
+
+    } catch(error) {
+        console.log(error)
+        res.status(400).send(error)
+    }
+}
+
 module.exports = { 
-    createNewMessage 
+    createNewMessage,
+    deleteMessage
 }

@@ -14,7 +14,7 @@ const getConversations = async(req, res) => {
 
 const getConversationById = async(req, res) => {
     try {
-        const conversation = await ConversationModel.findById(req.params.id)
+        const conversation = await ConversationModel.findOne({ members: { $all: [req.user._id] }, _id: req.params.id })
         .populate('members', 'firstname')
         
         res.status(200).send(conversation)
@@ -27,10 +27,8 @@ const getConversationById = async(req, res) => {
 const createNewConversation = async(req, res) => {
     try {
         const newConversation = new ConversationModel({
-            members: [req.user._id,req.body]
+            members: [req.user._id, req.body]
         })
-
-        console.log(newConversation)
 
         const savedConversation = await newConversation.save()
 

@@ -3,18 +3,16 @@ const ObjectID = require("mongoose").Types.ObjectId
 
 const messageSchema = new mongoose.Schema({
     conversationId: {
-        type: ObjectID,
-        ref: 'conversations'
+        type: ObjectID
     },
     sender: {
-        type: String,
-        required: true
+        type: String
     },
     content : {
         type: String,
         required: true
     }
-}) 
+}, { timestamps: true }) 
 
 const MessageModel = mongoose.model('messages', messageSchema)
 
