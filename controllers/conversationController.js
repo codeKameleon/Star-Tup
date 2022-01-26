@@ -1,3 +1,4 @@
+const mongoose = require ('mongoose')
 const ConversationModel = require('../models/conversationModel')
 
 const getConversations = async(req, res) => {
@@ -14,6 +15,10 @@ const getConversations = async(req, res) => {
 
 const getConversationById = async(req, res) => {
     try {
+        // Check if the id param passed in query is a valid ObjectId
+        const ObjectID = mongoose.Types.ObjectId
+        if(!ObjectID.isValid(req.params.id)) return res.status(400).send({ message: "Conversation id is not valid" })
+
         const conversation = await ConversationModel.findOne({ members: { $all: [req.user._id] }, _id: req.params.id })
         .populate('members', 'firstname')
         
@@ -26,6 +31,10 @@ const getConversationById = async(req, res) => {
 
 const createNewConversation = async(req, res) => {
     try {
+    // Check if the body request is a valid ObjectId
+    const ObjectID = mongoose.Types.ObjectId
+    if(!ObjectID.isValid(req.body)) return res.status(400).send({ message: "User id is not valid" })
+
     // Check if the conversation already exists
     const conversation = await ConversationModel.findOne({
         members: { $all: [req.user._id, req.body] } 
