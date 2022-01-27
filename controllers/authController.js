@@ -53,7 +53,18 @@ const logUser = async(req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, { expiresIn: "24h" })
     const maxAge = 24 * 60 * 60 * 1000
 
-    res.cookie('jwt', token, { httpOnly: true, sameSite: 'none', secure: true, maxAge: maxAge })
+    // Create cookie
+    const DB_HOST = process.env.DB_HOST
+    let cookieOptions = {
+        httpOnly: true,
+        maxAge: maxAge
+    }
+
+    if(DB_HOST !== "localhost") {
+        cookieOptions = {...cookieOptions, sameSite: 'none', secure: 'true'}
+    }
+
+    res.cookie('jwt', token, cookieOptions)
 
     res.header('auth-token').send({ token: token, user_id: user._id })
 
