@@ -1,5 +1,6 @@
 const mongoose = require ('mongoose')
 const MessageModel = require('../models/messageModel')
+const ConversationModel = require('../models/conversationModel')
 
 const getMessages  = async(req, res) => {
     try {
@@ -8,6 +9,15 @@ const getMessages  = async(req, res) => {
 
         if(!ObjectID.isValid(req.params.conversationId)) {
             return res.status(400).send({ message: "Conversation id is not valid" })
+        }
+
+        // Check if the user is allowed to access messages from a conversation
+        const conversation = await ConversationModel.findOne(
+            { members:  { $all: [req.user._id]}, _id: req.params.conversationId  },
+        )
+
+        if (!conversation) {
+            return res.status(400).send({ message: "You are not allowed to send a message to this conversation" })
         }
 
         const messages = await MessageModel.find({
@@ -29,6 +39,15 @@ const createNewMessage = async(req, res) => {
         if(!ObjectID.isValid(req.params.conversationId)) {
             return res.status(400).send({ message: "Conversation id is not valid" })
         } 
+
+        // Check if the user is allowed to send a message to a conversation
+        const conversation = await ConversationModel.findOne(
+            { members:  { $all: [req.user._id]}, _id: req.params.conversationId  },
+        )
+
+        if (!conversation) {
+            return res.status(400).send({ message: "You are not allowed to send a message to this conversation" })
+        }
 
         const newMessage = new MessageModel({
             conversationId: req.params.conversationId,
