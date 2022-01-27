@@ -78,7 +78,10 @@ app.get('/api', (req, res) => res.send({
         {
             route: "/api/users/:id",
             method: "GET",
-            description: "get one user"
+            description: "get one user",
+            query_params: [
+                'user id'
+            ]
         },
         {
             route: "/api/conversations",
@@ -94,11 +97,30 @@ app.get('/api', (req, res) => res.send({
             ]
         },
         {
-            route: "/api/messages/:id",
+            route: "/api/messages/:conversationId",
+            method: "GET",
+            description: "get all messages from a conversation",
+            query_params: [
+                'conversation id'
+            ]
+        },
+        {
+            route: "/api/messages/:conversationId",
             method: "POST",
-            description: "send message to a conversation",
+            description: "add a message to a conversation",
             required_fields: [
                 'content'
+            ],
+            query_params: [
+                'conversation id'
+            ]
+        },
+        {
+            route: "/api/messages/:id",
+            method: "DELETE",
+            description: "delete a message in a conversation",
+            query_params: [
+                'message id'
             ]
         }
     ]
