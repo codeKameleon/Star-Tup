@@ -19,7 +19,7 @@ export default function Conversation() {
 
     // Socket io
     useEffect(() => {
-        socket = io.connect(process.env.REACT_APP_HEROKU, {
+        socket = io.connect("https://becode-star-tup.herokuapp.com/", {
             forceNew: false,
             secure: true,
             transports: ['websocket']
@@ -46,7 +46,7 @@ export default function Conversation() {
 
     // Fetch conv
     const fetchConv = async () => {
-        const fetch = await axios.get(`${'http://localhost:' + process.env.PORT}/api/messages/${id}`, { headers: { withCredentials: true } })
+        const fetch = await axios.get(`/api/messages/${id}`, { headers: { withCredentials: true } })
         const data = await fetch.data
         setConv(data)
 
@@ -58,7 +58,7 @@ export default function Conversation() {
     function sendMessage(e) {
         e.preventDefault()
 
-        axios.post(`${'http://localhost:' + process.env.PORT}/api/messages/${id}`, message, { headers: { withCredentials: true } })
+        axios.post(`"/api/messages/"${id}`, message, { headers: { withCredentials: true } })
             .then(res => {
                 e.target.reset()
                 fetchConv()

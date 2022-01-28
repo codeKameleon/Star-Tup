@@ -11,7 +11,7 @@ export default function Contact() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        axios.get(`${'http://localhost:' + process.env.PORT}/api/users`)
+        axios.get(`/api/users`)
             .then(res => {
                 setUsers(res.data.users)
                 setUserId(res.data.authenticated_user._id)
@@ -20,7 +20,7 @@ export default function Contact() {
     }, []);
 
     function startConv(e) {
-        axios.post(`${'http://localhost:' + process.env.PORT}/api/conversations`, [e.target.id], { headers: { withCredentials: true }, credentials: 'same-origin' })
+        axios.post(`/api/conversations`, [e.target.id], { headers: { withCredentials: true }, credentials: 'same-origin' })
             .then(res => {
                 navigate("/chat/" + res.data._id + "/" + e.target.name + "/" + e.target.id, { replace: true })
             })

@@ -19,7 +19,7 @@ export default function Register() {
   const handleSubmit = e => {
     e.preventDefault()
 
-    axios.post(`${process.env.REACT_APP_API}/account/register`, data)
+    axios.post(`/api/account/register`, data)
       .then(() => {
         navigate("/login", { replace: true })
       })

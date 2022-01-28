@@ -10,7 +10,7 @@ export default function User() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        axios.get(`${'http://localhost:' + process.env.PORT}/api/users/${cookies.jwt}`, { headers: { withCredentials: true } })
+        axios.get(`/api/users/${cookies.jwt}`, { headers: { withCredentials: true } })
             .then(res => {
                 setUser(res.data)
             })
@@ -18,7 +18,7 @@ export default function User() {
     }, []);
 
     function logout() {
-        axios.get(`${'http://localhost:' + process.env.PORT}/api/account/logout`, { headers: { withCredentials: true } })
+        axios.get("/api/account/logout", { headers: { withCredentials: true } })
             .then(res => {
                 removeCookie('jwt')
                 navigate("/")
