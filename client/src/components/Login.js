@@ -17,7 +17,7 @@ export default function Login() {
   const handleSubmit = e => {
     e.preventDefault()
 
-    axios.post(`${process.env.REACT_APP_API}/account/login`, data, { credentials: 'same-origin' })
+    axios.post(`${'http://localhost:' + process.env.PORT}/api/account/login`, data, { credentials: 'same-origin' })
       .then(res => {
         setCookie('jwt', res.data.user_id)
         navigate("/chat", { replace: true })

@@ -12,7 +12,7 @@ export default function Chat() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API}/conversations/`, { headers: { withCredentials: true } })
+    axios.get(`${'http://localhost:' + process.env.PORT}/api/conversations/`, { headers: { withCredentials: true } })
       .then(res => {
         setConv(res.data)
       })
