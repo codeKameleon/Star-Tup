@@ -10,6 +10,8 @@ const userRoutes = require('./routes/userRoutes')
 const conversationRoutes = require('./routes/conversationRoutes')
 const messageRoutes = require('./routes/messageRoutes')
 
+const path = require("path")
+
 // Set up environment variables
 dotenv.config()
 
@@ -18,6 +20,23 @@ const port = process.env.PORT
 
 // Connection to DB
 connectDB()
+
+// HEROKU FULLSTACK DEPLOY
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, "/client/build")));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, "client/build", "index.html"))
+    })
+}
+else {
+    app.get("/", (req, res) => {
+        res.send("API is running sucessfully")
+    })
+}
+
+// 
 
 // Middlewares
 app.use(cors())
@@ -127,11 +146,6 @@ app.get('/api', (req, res) => res.send({
 }))
 
 app.get('/', (req, res) => res.redirect('/api'))
-
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'));
-}
-
 
 // Server
 const server = app.listen(port, () => console.log(`Server started and running at http://localhost:${port}`))
