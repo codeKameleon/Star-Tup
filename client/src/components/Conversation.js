@@ -58,7 +58,7 @@ export default function Conversation() {
     function sendMessage(e) {
         e.preventDefault()
 
-        axios.post(`"/api/messages/"${id}`, message, { headers: { withCredentials: true } })
+        axios.post(`/api/messages/${id}`, message, { headers: { withCredentials: true } })
             .then(res => {
                 e.target.reset()
                 fetchConv()
