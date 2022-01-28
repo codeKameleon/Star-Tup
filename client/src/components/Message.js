@@ -4,11 +4,11 @@ import { useCookies } from 'react-cookie';
 
 export default function Message(message) {
     const { id, name } = useParams();
-    const [cookies, setCookie, removeCookie] = useCookies(['jwt']);
+    const [cookies, setCookie, removeCookie] = useCookies(['userId']);
 
     return (
         <div>
-            {message.message.sender === cookies.jwt ?
+            {message.message.sender === cookies.userId ?
                 <div className='flex flex-col items-end justify-end text-right w-full pr-2'>
                     <h1 className='pr-2'>Me :</h1>
                     <p className='max-w-xs p-2 bg-[#7aa5d2] rounded-xl mb-2 '>{message.message.content}</p>

@@ -10,7 +10,7 @@ export default function Login() {
     password: "",
   })
   const [error, setError] = useState({})
-  const [cookies, setCookie] = useCookies(['jwt']);
+  const [cookies, setCookie] = useCookies(['userId']);
 
   const navigate = useNavigate()
 
@@ -19,7 +19,7 @@ export default function Login() {
 
     axios.post(`/api/account/login`, data, { credentials: 'same-origin' })
       .then(res => {
-        setCookie('jwt', res.data.user_id)
+        setCookie('userId', res.data.user_id)
         navigate("/chat", { replace: true })
       })
       .catch(err => setError(err.response.data.message))

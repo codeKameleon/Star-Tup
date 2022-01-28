@@ -5,12 +5,12 @@ import { useCookies } from 'react-cookie';
 
 export default function User() {
     const [user, setUser] = useState([])
-    const [cookies, setCookie, removeCookie] = useCookies(['jwt']);
+    const [cookies, setCookie, removeCookie] = useCookies(['userId']);
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        axios.get(`/api/users/${cookies.jwt}`, { headers: { withCredentials: true } })
+        axios.get(`/api/users/${cookies.userId}`, { headers: { withCredentials: true } })
             .then(res => {
                 setUser(res.data)
             })
@@ -20,7 +20,7 @@ export default function User() {
     function logout() {
         axios.get("/api/account/logout", { headers: { withCredentials: true } })
             .then(res => {
-                removeCookie('jwt')
+                removeCookie('userId')
                 navigate("/")
             })
             .catch(err => console.log(err))

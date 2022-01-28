@@ -15,7 +15,7 @@ export default function Conversation() {
     const { id, name, receiverId } = useParams();
     const scrollRef = useRef()
     const [socketConnected, setSocketConnected] = useState(false)
-    const user = cookies.jwt
+    const user = cookies.userId
 
     // Socket io
     useEffect(() => {
