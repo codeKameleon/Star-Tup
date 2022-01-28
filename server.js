@@ -1,14 +1,14 @@
 const express = require('express')
 const dotenv = require('dotenv')
-const cors =  require('cors')
+const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
 const connectDB = require('./config/db')
 
-const authRoutes  = require('./routes/authRoutes')
-const userRoutes  = require('./routes/userRoutes')
-const conversationRoutes  = require('./routes/conversationRoutes')
-const messageRoutes  = require('./routes/messageRoutes')
+const authRoutes = require('./routes/authRoutes')
+const userRoutes = require('./routes/userRoutes')
+const conversationRoutes = require('./routes/conversationRoutes')
+const messageRoutes = require('./routes/messageRoutes')
 
 // Set up environment variables
 dotenv.config()
@@ -20,7 +20,7 @@ const port = process.env.PORT
 connectDB()
 
 // Middlewares
-app.use(cors({ origin: 'https://star-tup-da.vercel.app', credentials: true }))
+app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser())
@@ -128,6 +128,10 @@ app.get('/api', (req, res) => res.send({
 
 app.get('/', (req, res) => res.redirect('/api'))
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+}
+
 
 // Server
 const server = app.listen(port, () => console.log(`Server started and running at http://localhost:${port}`))
@@ -136,10 +140,7 @@ const io = require('socket.io')(server, {
     pingTimeout: 60000,
     log: false,
     agent: false,
-    transport : ['websocket'],
-    cors: {
-        origin: "https://star-tup-da.vercel.app"
-    }
+    transport: ['websocket']
 })
 
 io.on("connection", (socket) => {
