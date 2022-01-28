@@ -128,5 +128,37 @@ app.get('/api', (req, res) => res.send({
 
 app.get('/', (req, res) => res.redirect('/api'))
 
+
 // Server
-app.listen(port, () => console.log(`Server started and running at http://localhost:${port}`))
+const server = app.listen(port, () => console.log(`Server started and running at http://localhost:${port}`))
+
+const io = require('socket.io')(server, {
+    pingTimeout: 60000,
+    log: false,
+    agent: false,
+    transport : ['websocket'],
+    cors: {
+        origin: "http://localhost:3000/"
+    }
+})
+
+io.on("connection", (socket) => {
+    console.log("connected to socket.io");
+
+    socket.on('setup', (userData) => {
+        socket.join(userData)
+        console.log('userData', userData);
+        socket.emit("connected")
+    })
+
+    socket.on('join chat', (conversation) => {
+        socket.join(conversation)
+        console.log('User join conversation: ' + conversation);
+    })
+
+    socket.on('new message', (message) => {
+        console.log('message', message)
+        socket.to(message.receiverId).emit("message received", message.message.content);
+    })
+})
+
