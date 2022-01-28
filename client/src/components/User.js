@@ -37,7 +37,7 @@ export default function User() {
         <>
             <header>
                 <Link to={"/chat"}>
-                    <button className='px-5 py-4 text-white'><i className="fas fa-chevron-left"></i></button>
+                    <button className='px-5 py-4 text-[#47555e]'><i className="fas fa-chevron-left"></i></button>
                 </Link>
             </header>
             <main className='h-5/6 flex flex-col justify-center items-center'>
