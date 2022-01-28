@@ -20,7 +20,7 @@ const port = process.env.PORT
 connectDB()
 
 // Middlewares
-app.use(cors({ origin: 'https://angry-mahavira-0eab7a.netlify.app/', credentials: true }))
+app.use(cors({ origin: 'https://angry-mahavira-0eab7a.netlify.app', credentials: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser())
@@ -138,7 +138,7 @@ const io = require('socket.io')(server, {
     agent: false,
     transport : ['websocket'],
     cors: {
-        origin: "https://angry-mahavira-0eab7a.netlify.app/"
+        origin: "https://angry-mahavira-0eab7a.netlify.app"
     }
 })
 
