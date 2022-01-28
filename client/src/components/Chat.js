@@ -16,7 +16,7 @@ export default function Chat() {
       .then(res => {
         setConv(res.data)
       })
-      .catch(err => navigate("/login") + alert("You need to login first"))
+      .catch(err => console.log(err))
   }, []);
 
   return (
