@@ -12,12 +12,22 @@ const addUser = (token, socketId) => {
     users.push({token, socketId})
 }
 
+const removeUser = (socketId) => {
+    users = users.filter(user => user.socketId !== socketId)
+}
+
 io.on("connection", (socket) => {
     console.log("a user connected")
     // Take token and socketId from user
     socket.on("addUser", token => {
         addUser(token, socket.id)
         // Send users to client
+        io.emit("getUsers", users)
+    })
+
+    socket.on("disconnect", () => {
+        console.log("a user disconnected")
+        removeUser(socket.id)
         io.emit("getUsers", users)
     })
 })
