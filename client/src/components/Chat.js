@@ -12,7 +12,7 @@ export default function Chat() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios.get("/api/conversations/", { headers: { withCredentials: true } })
+    axios.get("/api/conversations/")
       .then(res => {
         console.log(res);
         setConv(res.data)
