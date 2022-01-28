@@ -14,6 +14,7 @@ export default function Chat() {
   useEffect(() => {
     axios.get("/api/conversations/", { headers: { withCredentials: true } })
       .then(res => {
+        console.log(res);
         setConv(res.data)
       })
       .catch(err => console.log(err))
