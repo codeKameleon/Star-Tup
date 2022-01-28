@@ -39,7 +39,7 @@ else {
 // 
 
 // Middlewares
-app.use(cors())
+app.use(cors({ origin: 'https://becode-star-tup.herokuapp.com', credentials: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser())
@@ -154,7 +154,10 @@ const io = require('socket.io')(server, {
     pingTimeout: 60000,
     log: false,
     agent: false,
-    transport: ['websocket']
+    transport: ['websocket'],
+    cors: {
+        origin: "https://becode-star-tup.herokuapp.com"
+    }
 })
 
 io.on("connection", (socket) => {
