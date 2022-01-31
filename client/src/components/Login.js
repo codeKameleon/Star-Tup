@@ -22,7 +22,7 @@ export default function Login() {
         setCookie('userId', res.data.user_id)
         navigate("/chat", { replace: true })
       })
-      .catch(err => setError(err.response.data.message))
+      .catch(err => setError(err.response.data.error))
   }
 
   return (
