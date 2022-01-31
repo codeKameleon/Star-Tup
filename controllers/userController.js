@@ -1,5 +1,7 @@
 const UserModel = require('../models/userModel')
 
+const { updateUserValidation } =  require('../middlewares/validationMiddleware')
+
 const getAllUsers = async(req, res) => {
     try {
         const users = await UserModel.find({})
@@ -26,13 +28,21 @@ const getUserById = async(req, res) => {
 
 const updateUser =  async(req, res) => {
     try {
+
+        // Validation
+        const { error } = updateUserValidation(req.body)
+
+        if(error) {
+            return res.status(400).send({ error: error.details[0].message })
+        } 
+        
         const user = await UserModel.findByIdAndUpdate(
             req.user._id,
             {
                 $set: {
+                    motto: req.body.motto,
                     email: req.body.email,
-                    password: req.body.password,
-                    motto: req.body.motto
+                    password: req.body.password
                 }
             },
             { new : true }
@@ -41,7 +51,7 @@ const updateUser =  async(req, res) => {
         res.status(200).send(user)
     } catch(error) {
         console.log(error)
-        return res.status(400).send("Update user failed: " +  error)
+        return res.status(400).send({message: "Update user failed: " +  error })
     }
 }
 

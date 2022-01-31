@@ -2,7 +2,9 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const UserModel = require('../models/userModel')
+
 const { registerValidation } =  require('../middlewares/validationMiddleware')
+
 
 const createNewUser = async(req, res) => {
     // Validation
