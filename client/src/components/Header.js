@@ -8,7 +8,7 @@ export default function Header({ page }) {
         navigate("/user")
     }
     return (
-        <header className='flex items-center fixed w-full bg-[#47555e] pb-2 h-14 border-b-4 border-[#38444b]'>
+        <header className='flex items-center fixed w-full bg-[#202c33] pb-2 h-14 border-b-2 border-[#111b21]'>
             <button className='flex justify-center items-center  rounded-full w-10 h-10 mt-3 ml-3 bg-[#7aa5d2] active:border-2 active:border-[#38444b] text-4xl text-[#38444b]' onClick={() => user()}>
                 <i className="fas fa-user-circle"></i>
             </button>
