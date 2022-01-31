@@ -2,8 +2,16 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const UserModel = require('../models/userModel')
+const { registerValidation } =  require('../middlewares/validationMiddleware')
 
 const createNewUser = async(req, res) => {
+    // Validation
+    const { error } = registerValidation(req.body)
+
+    if(error) {
+        return res.status(400).send({ error: error.details[0].message })
+    } 
+    
     // Check if user already exists
     const registeringUser =  await UserModel.findOne({ email: req.body.email })
 
