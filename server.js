@@ -22,7 +22,6 @@ const port = process.env.PORT
 connectDB()
 
 // HEROKU FULLSTACK DEPLOY
-
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, "/client/build")));
 
@@ -35,8 +34,6 @@ else {
         res.send("API is running sucessfully")
     })
 }
-
-// 
 
 // Middlewares
 app.use(cors({ origin: "https://becode-star-tup.herokuapp.com", credentials: true }))
@@ -144,8 +141,6 @@ app.get('/api', (req, res) => res.send({
         }
     ]
 }))
-
-app.get('/', (req, res) => res.redirect('/api'))
 
 // Server
 const server = app.listen(port, () => console.log(`Server started and running at http://localhost:${port}`))
