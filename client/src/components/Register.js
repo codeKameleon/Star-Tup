@@ -23,7 +23,7 @@ export default function Register() {
       .then((res) => {
         navigate("/login", { replace: true })
       })
-      .catch(err => setError(err.response.data.message))
+      .catch(err => setError(err.response.data.error))
   }
 
   return (
