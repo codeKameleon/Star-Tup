@@ -14,12 +14,16 @@ export default function User() {
 
     const navigate = useNavigate()
 
-    useEffect(() => {
+    function fetch() {
         axios.get(`http://localhost:9000/api/users/${cookies.userId}`, { headers: { withCredentials: true } })
             .then(res => {
                 setUser(res.data)
             })
             .catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        fetch()
     }, []);
 
     function logout() {
@@ -43,8 +47,7 @@ export default function User() {
     
         axios.put(`http://localhost:9000/api/users/${cookies.userId}`, update)
           .then(res => {
-              console.log(res);
-            // navigate("/login", { replace: true })
+              fetch()
           })
           .catch(err => console.log(err.response))
       }
@@ -69,7 +72,7 @@ export default function User() {
                         <p>Last name : {user.lastname}</p>
                         <p>Email : {user.email}</p>
                         <p>Birthdate : {!user.birthdate ? null : date()}</p>
-                        <p>Motto : {user.motto === 'undefined' ? user.motto : ""}</p>
+                        <p>Motto : {user.motto === 'undefined' ? "" : user.motto}</p>
                     </div>
                 </div>
                 <div className='w-full flex flex-col items-center justify-center'>
