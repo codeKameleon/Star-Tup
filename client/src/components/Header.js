@@ -14,7 +14,7 @@ export default function Header({ page }) {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:9000/api/users/${cookies.userId}`)
+        axios.get(`/api/users/${cookies.userId}`)
             .then(res => {
                 setFirstname(res.data.firstname[1]);
             })
