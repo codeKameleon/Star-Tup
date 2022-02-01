@@ -21,8 +21,6 @@ const port = process.env.PORT
 // Connection to DB
 connectDB()
 
-
-
 // Middlewares
 app.use(cors({ origin: "https://becode-star-tup.herokuapp.com", credentials: true }))
 app.use(express.urlencoded({ extended: true }))
@@ -138,7 +136,7 @@ if (process.env.NODE_ENV === 'production') {
         res.redirect("/app/")
     })
 
-    app.get('/app/*', (req, res) => {
+    app.get('/*', (req, res) => {
         res.sendFile(path.join(__dirname, "client/build/index.html"))
     })
 }
