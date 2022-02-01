@@ -28,8 +28,8 @@ export default function Register() {
 
   return (
     <>
-      <main className='flex flex-col items-center sm:px-6 lg:px-8 h-full bg-[#47555e]'>
-        <header className='bg-[#47555e]'>
+      <main className='flex flex-col items-center sm:px-6 lg:px-8 h-full'>
+        <header>
           <Link to={"/"}>
             <button className='px-5 py-4 text-white'><i className="fas fa-chevron-left"></i></button>
           </Link>

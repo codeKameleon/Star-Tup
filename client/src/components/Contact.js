@@ -43,7 +43,7 @@ export default function Contact() {
                                 <button className='w-12 h-12 rounded-full bg-white mr-4'>{Avatar(user.firstname[1])}</button>
                                 <div id={user._id}>
                                     <h1 id={user._id} className='text-lg font-medium text-white'>{cookies.userId === user._id ? "Me" : user.firstname}</h1>
-                                    <p id={user._id} className='text-sm text-slate-500 truncate'>{user.motto}</p>
+                                    <p id={user._id} className='text-sm text-slate-500 truncate'>{user.motto.substring(0,20)}...</p>
                                 </div>
                             </div>
                             <div id={user._id}>
