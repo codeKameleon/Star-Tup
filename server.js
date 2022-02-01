@@ -21,19 +21,7 @@ const port = process.env.PORT
 // Connection to DB
 connectDB()
 
-// HEROKU FULLSTACK DEPLOY
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, "/client/build")));
 
-    app.get('/', (req, res) => {
-        res.sendFile(path.join(__dirname, "client/build/index.html"))
-    })
-}
-else {
-    app.get("/", (req, res) => {
-        res.send("API is running sucessfully")
-    })
-}
 
 // Middlewares
 app.use(cors({ origin: "https://becode-star-tup.herokuapp.com", credentials: true }))
@@ -141,6 +129,24 @@ app.get('/api', (req, res) => res.send({
         }
     ]
 }))
+
+// HEROKU FULLSTACK DEPLOY
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, "/client/build")));
+
+    app.get("/", (req, res) => {
+        res.redirect("/app/")
+    })
+
+    app.get('/app/*', (req, res) => {
+        res.sendFile(path.join(__dirname, "client/build/index.html"))
+    })
+}
+else {
+    app.get("/", (req, res) => {
+        res.send("API is running sucessfully")
+    })
+}
 
 // Server
 const server = app.listen(port, () => console.log(`Server started and running at http://localhost:${port}`))
