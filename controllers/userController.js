@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt')
 const UserModel = require('../models/userModel')
 
 const { updateUserValidation } =  require('../middlewares/validationMiddleware')
@@ -35,6 +36,11 @@ const updateUser =  async(req, res) => {
         if(error) {
             return res.status(400).send({ error: error.details[0].message })
         } 
+
+
+        // Crypt password
+        const salt = await bcrypt.genSalt()
+        const hashPassword = await bcrypt.hash(req.body.password, salt)
         
         const user = await UserModel.findByIdAndUpdate(
             req.user._id,
@@ -42,7 +48,7 @@ const updateUser =  async(req, res) => {
                 $set: {
                     motto: req.body.motto,
                     email: req.body.email,
-                    password: req.body.password
+                    password: hashPassword
                 }
             },
             { new : true }
