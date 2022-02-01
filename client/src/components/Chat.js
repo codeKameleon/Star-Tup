@@ -15,7 +15,6 @@ export default function Chat() {
   useEffect(() => {
     axios.get("http://localhost:9000/api/conversations/")
       .then(res => {
-        console.log(res.data);
         setConv(res.data)
       })
       .catch(err => console.log(err))
@@ -39,7 +38,9 @@ export default function Chat() {
             </Link>
           );
         })
-          : null}
+          : 
+          <p className='text-white pt-48'>Add <Link to={"/contact"} className='text-[#7aa5d2] hover:text-[#6798cc]'>contact</Link> to start chatting</p>
+            }
       </main>
       <Navbar page="chat" />
     </>

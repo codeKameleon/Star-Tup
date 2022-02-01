@@ -82,15 +82,15 @@ export default function User() {
                     <div className='flex flex-col mt-4 w-full justify-center'>
                         <label className='text-white ml-14 mb-2'>Email :</label>
                         <br />
-                        <input type="email" placeholder='new email' className='w-3/4 h-8 rounded-full pl-4 m-auto' onChange={e => setUpdate({ ...update, email: e.target.value })}/>
+                        <input type="email" placeholder='new email' className='w-3/4 h-8 rounded-full pl-4 m-auto mb-2' onChange={e => setUpdate({ ...update, email: e.target.value })}/>
                         
                         <label className='text-white ml-14 mb-2'>Password :</label>
                         <br />
-                        <input type="password" placeholder='new password' className='w-3/4 h-8 rounded-full pl-4 m-auto' onChange={e => setUpdate({ ...update, password: e.target.value })}/>
+                        <input type="password" placeholder='new password' className='w-3/4 h-8 rounded-full pl-4 m-auto mb-2' onChange={e => setUpdate({ ...update, password: e.target.value })}/>
                         
                         <label className='text-white ml-14 mb-2'>Motto :</label>
                         <br />
-                        <input type="text" placeholder='new motto' className='w-3/4 h-8 rounded-full pl-4 m-auto' onChange={e => setUpdate({ ...update, motto: e.target.value })}/>
+                        <input type="text" placeholder='new motto' className='w-3/4 h-8 rounded-full pl-4 m-auto mb-2' onChange={e => setUpdate({ ...update, motto: e.target.value })}/>
                         <button className='p-2 w-24 bg-[#7aa5d2] rounded-lg m-auto mt-8' onClick={(e) => handleSubmit(e)}>Update</button>
                     </div>
                 </div>
