@@ -29,10 +29,6 @@ const getUserById = async(req, res) => {
 
 const updateUser =  async(req, res) => {
     try {
-
-        const { motto, email, password } = req.body;
-
-
         // Validation
         const { error } = updateUserValidation(req.body)
 
@@ -40,11 +36,11 @@ const updateUser =  async(req, res) => {
             return res.status(400).send({ error: error.details[0].message })
         } 
 
-
         // Crypt password
         const salt = await bcrypt.genSalt()
         const hashPassword = await bcrypt.hash(req.body.password, salt)
 
+        const { motto, email, password } = req.body;
         let filteredBody = {};
       
         if (email) {
@@ -58,17 +54,12 @@ const updateUser =  async(req, res) => {
         if(motto) {
             filteredBody["motto"] = motto;
         }
-      
-        console.log(filteredBody);
-      
-        
+
+        console.log(filteredBody)
+          
         const user = await UserModel.findByIdAndUpdate(
             req.user._id,
-            {
-                $set: {
-                    filteredBody
-                }
-            },
+            filteredBody,
             { new : true }
         )
 
