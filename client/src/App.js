@@ -1,4 +1,4 @@
-import { Route, Routes, Redirect } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -13,7 +13,7 @@ function App() {
     <div className="w-full h-screen bg-[#111b21]">
       <CookiesProvider>
         <Routes>
-        <Route exact path="/"><Redirect to="/app" /></Route>
+        <Route exact path="/" element={<Navigate replace to="/app" />} />
           <Route exact path="/app" element={<Home />} />
           <Route exact path="/app/register" element={<Register />} />
           <Route exact path="/app/login" element={<Login />} />
