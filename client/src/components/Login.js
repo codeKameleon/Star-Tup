@@ -21,7 +21,7 @@ export default function Login() {
     axios.post("/api/account/login", data, { credentials: 'same-origin' })
       .then(res => {
         setCookie('userId', res.data.user_id)
-        navigate("/chat", { replace: true })
+        navigate("app/chat", { replace: true })
       })
       .catch(err => setError(err.response.data.message))
   }
