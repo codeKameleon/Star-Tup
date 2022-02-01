@@ -20,9 +20,10 @@ const registerValidation = data => {
 
 const updateUserValidation = data => {
     const schema = Joi.object({
-        motto: Joi.string(),
-        email: Joi.string().required().email(),
+        motto: Joi.string().allow(''),
+        email: Joi.string().allow('').email(),
         password: Joi.string()
+        .allow('')
         .min(8)
         .pattern(/^(?=.*[A-Z].*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*{}[\]()\-__+.]).{8,}$/)
         .messages({

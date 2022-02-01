@@ -46,7 +46,7 @@ export default function Conversation() {
 
     // Fetch conv
     const fetchConv = async () => {
-        const fetch = await axios.get(`/api/messages/${id}`, { headers: { withCredentials: true } })
+        const fetch = await axios.get(`http://localhost:9000/api/messages/${id}`, { headers: { withCredentials: true } })
         const data = await fetch.data
         setConv(data)
 
@@ -58,7 +58,7 @@ export default function Conversation() {
     function sendMessage(e) {
         e.preventDefault()
 
-        axios.post(`/api/messages/${id}`, message, { headers: { withCredentials: true } })
+        axios.post(`http://localhost:9000/api/messages/${id}`, message, { headers: { withCredentials: true } })
             .then(res => {
                 e.target.reset()
                 fetchConv()
@@ -75,8 +75,8 @@ export default function Conversation() {
     }, [conv])
 
     return (
-        <div className='flex flex-col h-screen justify-between'>
-            <header className='flex items-center fixed w-full bg-[#47555e] pb-2 h-14 border-b-4 border-[#38444b]'>
+        <div className='flex flex-col h-screen justify-between bg-[#111b21]'>
+            <header className='flex items-center fixed w-full bg-[#202c33] pb-2 h-14 border-b-4 border-[#111b21]'>
                 <Link to={"/chat"}>
                     <button className='text-white pl-4'><i className="fas fa-chevron-left"></i></button>
                 </Link>
@@ -91,8 +91,8 @@ export default function Conversation() {
                 }
             </main >
             <div className='block fixed inset-x-0 bottom-0 z-10'>
-                <form onSubmit={(e) => sendMessage(e)} className='flex w-full items-center h-14 bg-[#47555e] border-t-4 border-[#38444b]'>
-                    <input type="text" className='h-8 w-5/6 ml-2 placeholder pl-2 rounded-full' placeholder='Aa' onChange={(e) => setMessage({ ...message, "content": e.target.value })} />
+                <form onSubmit={(e) => sendMessage(e)} className='flex w-full items-center h-14 bg-[#202c33] border-t-4 border-[#111b21]'>
+                    <input type="text" required className='h-8 w-5/6 ml-2 placeholder pl-2 rounded-xl bg-[#2a3942] text-white focus:outline-none' placeholder='Aa' onChange={(e) => setMessage({ ...message, "content": e.target.value })} />
                     <button type='submit' className='ml-4 text-white text-2xl'><i className="fas fa-paper-plane"></i></button>
                 </form>
             </div>

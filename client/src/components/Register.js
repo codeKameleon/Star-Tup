@@ -19,8 +19,8 @@ export default function Register() {
   const handleSubmit = e => {
     e.preventDefault()
 
-    axios.post(`/api/account/register`, data)
-      .then(() => {
+    axios.post(`http://localhost:9000/api/account/register`, data)
+      .then((res) => {
         navigate("/login", { replace: true })
       })
       .catch(err => setError(err.response.data.error))
@@ -28,8 +28,8 @@ export default function Register() {
 
   return (
     <>
-      <main className='flex flex-col items-center sm:px-6 lg:px-8 h-full bg-[#47555e]'>
-        <header className='bg-[#47555e]'>
+      <main className='flex flex-col items-center sm:px-6 lg:px-8 h-full'>
+        <header>
           <Link to={"/"}>
             <button className='px-5 py-4 text-white'><i className="fas fa-chevron-left"></i></button>
           </Link>
@@ -50,7 +50,7 @@ export default function Register() {
           <input type="text" name='lastname' onChange={e => setData({ ...data, lastname: e.target.value })} required className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' placeholder='Last Name' />
 
           <label htmlFor="birthdate" className='sr-only'>Birthdate</label>
-          <input type="date" name='birthdate' onChange={e => setData({ ...data, birthdate: e.target.value })} required className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' />
+          <input type="date" name='birthdate' onChange={e => setData({ ...data, birthdate: e.target.value })} required className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' max={new Date()} />
 
           <label htmlFor="password" className='sr-only'>Password</label>
           <input type="password" name='password' onChange={e => setData({ ...data, password: e.target.value })} required className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' placeholder='Password' />

@@ -10,7 +10,7 @@ import { CookiesProvider } from 'react-cookie';
 
 function App() {
   return (
-    <div className="w-full h-screen bg-[#eceeee]">
+    <div className="w-full h-screen bg-[#111b21]">
       <CookiesProvider>
         <Routes>
           <Route exact path="/" element={<Home />} />
