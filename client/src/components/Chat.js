@@ -13,7 +13,7 @@ export default function Chat() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios.get("http://localhost:9000/api/conversations/")
+    axios.get("/api/conversations/")
       .then(res => {
         setConv(res.data)
       })
