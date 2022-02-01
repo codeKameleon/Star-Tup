@@ -13,13 +13,13 @@ function App() {
     <div className="w-full h-screen bg-[#111b21]">
       <CookiesProvider>
         <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/register" element={<Register />} />
-          <Route exact path="/login" element={<Login />} />
-          <Route exact path="/chat" element={<Chat />} />
-          <Route exact path="/contact" element={<Contact />} />
-          <Route exact path="/user" element={<User />} />
-          <Route exact path="/chat/:id/:name/:receiverId" element={<Conversation />} />
+          <Route exact path="/app" element={<Home />} />
+          <Route exact path="/app/register" element={<Register />} />
+          <Route exact path="/app/login" element={<Login />} />
+          <Route exact path="/app/chat" element={<Chat />} />
+          <Route exact path="/app/contact" element={<Contact />} />
+          <Route exact path="/app/user" element={<User />} />
+          <Route exact path="/app/chat/:id/:name/:receiverId" element={<Conversation />} />
         </Routes>
       </CookiesProvider>
     </div>

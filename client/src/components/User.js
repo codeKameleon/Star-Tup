@@ -31,7 +31,7 @@ export default function User() {
         axios.get("/api/account/logout", { headers: { withCredentials: true } })
             .then(res => {
                 removeCookie('userId')
-                navigate("/")
+                navigate("/app")
             })
             .catch(err => console.log(err))
     }
@@ -62,7 +62,7 @@ export default function User() {
     return (
         <>
             <header className='flex justify-between w-full h-16 items-center'>
-                <Link to={"/chat"}>
+                <Link to={"/app/chat"}>
                     <button className='px-5 py-4 text-white'><i className="fas fa-chevron-left"></i></button>
                 </Link>
                 <button className='p-2 w-24 bg-[#f32727] rounded-lg mr-4' onClick={() => logout()}>Log out</button>

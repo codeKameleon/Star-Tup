@@ -21,7 +21,7 @@ export default function Register() {
 
     axios.post("/api/account/register", data)
       .then((res) => {
-        navigate("/login", { replace: true })
+        navigate("/app/login", { replace: true })
       })
       .catch(err => setError(err.response.data.error))
   }
@@ -30,10 +30,10 @@ export default function Register() {
     <>
       <main className='flex flex-col items-center sm:px-6 lg:px-8 h-full'>
         <header>
-          <Link to={"/"}>
+          <Link to={"/app"}>
             <button className='px-5 py-4 text-white'><i className="fas fa-chevron-left"></i></button>
           </Link>
-          <img src="logo.png" alt="logo" className='w-3/4 m-auto mb-10' />
+          <img src="../logo.png" alt="logo" className='w-3/4 m-auto mb-10' />
         </header>
 
         {error.length > 0 ? <p className='text-[#b33232] text-sm m-auto text-center'>{error}</p> : null}
@@ -59,7 +59,7 @@ export default function Register() {
           <input type="text" name='moto' onChange={e => setData({ ...data, motto: e.target.value })} className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' placeholder='Personal moto (optional)' />
 
           <button type='submit' className='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#7aa5d2] hover:bg-[#6798cc] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>Register</button>
-          <p className='text-white text-center'>Already have an account ? <Link to="/login" className='text-[#7aa5d2] hover:text-[#6798cc]'>Login</Link></p>
+          <p className='text-white text-center'>Already have an account ? <Link to="/app/login" className='text-[#7aa5d2] hover:text-[#6798cc]'>Login</Link></p>
         </form>
       </main>
     </>
