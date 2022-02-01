@@ -6,8 +6,7 @@ const { updateUserValidation } =  require('../middlewares/validationMiddleware')
 const getAllUsers = async(req, res) => {
     try {
         const users = await UserModel.find({})
-        .select("-password")
-        .select("-lastname")
+        .select("-password -lastname -email -__v -birthdate")
         
         res.send({ users: users, authenticated_user: req.user })
     } catch(error) {
@@ -17,7 +16,8 @@ const getAllUsers = async(req, res) => {
 }
 
 const getUserById = async(req, res) => {
-    try{
+    try {
+        if(req.user._id !== req.params.id) return res.status(400).send({ message : "Access Denied" })
         const user = await UserModel.findById(req.params.id)
         
         res.send(user)
@@ -29,6 +29,7 @@ const getUserById = async(req, res) => {
 
 const updateUser =  async(req, res) => {
     try {
+        if(req.user._id !== req.params.id) return res.status(400).send({ message : "Access Denied" })
         // Validation
         const { error } = updateUserValidation(req.body)
 
