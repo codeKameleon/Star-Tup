@@ -77,7 +77,7 @@ export default function Conversation() {
     return (
         <div className='flex flex-col h-screen justify-between bg-[#111b21]'>
             <header className='flex items-center fixed w-full bg-[#202c33] pb-2 h-14 border-b-4 border-[#111b21]'>
-                <Link to={"/chat"}>
+                <Link to={"/app/chat"}>
                     <button className='text-white pl-4'><i className="fas fa-chevron-left"></i></button>
                 </Link>
                 <h1 className='m-auto pr-16 text-white'>{name}</h1>
