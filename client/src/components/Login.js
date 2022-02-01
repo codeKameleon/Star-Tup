@@ -17,12 +17,12 @@ export default function Login() {
   const handleSubmit = e => {
     e.preventDefault()
 
-    axios.post(`/api/account/login`, data, { credentials: 'same-origin' })
+    axios.post(`http://localhost:9000/api/account/login`, data, { credentials: 'same-origin' })
       .then(res => {
         setCookie('userId', res.data.user_id)
         navigate("/chat", { replace: true })
       })
-      .catch(err => setError(err.response.data.error))
+      .catch(err => setError(err.response.data.message))
   }
 
   return (

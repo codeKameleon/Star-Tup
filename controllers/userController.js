@@ -30,6 +30,9 @@ const getUserById = async(req, res) => {
 const updateUser =  async(req, res) => {
     try {
 
+        const { motto, email, password } = req.body;
+
+
         // Validation
         const { error } = updateUserValidation(req.body)
 
@@ -41,14 +44,29 @@ const updateUser =  async(req, res) => {
         // Crypt password
         const salt = await bcrypt.genSalt()
         const hashPassword = await bcrypt.hash(req.body.password, salt)
+
+        let filteredBody = {};
+      
+        if (email) {
+          filteredBody["email"] = email;
+        }
+
+        if(password) {
+            filteredBody["password"] = hashPassword;
+        }
+
+        if(motto) {
+            filteredBody["motto"] = motto;
+        }
+      
+        console.log(filteredBody);
+      
         
         const user = await UserModel.findByIdAndUpdate(
             req.user._id,
             {
                 $set: {
-                    motto: req.body.motto,
-                    email: req.body.email,
-                    password: hashPassword
+                    filteredBody
                 }
             },
             { new : true }

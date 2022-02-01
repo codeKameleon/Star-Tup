@@ -10,7 +10,7 @@ export default function User() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        axios.get(`/api/users/${cookies.userId}`, { headers: { withCredentials: true } })
+        axios.get(`http://localhost:9000/api/users/${cookies.userId}`, { headers: { withCredentials: true } })
             .then(res => {
                 setUser(res.data)
             })
@@ -18,7 +18,7 @@ export default function User() {
     }, []);
 
     function logout() {
-        axios.get("/api/account/logout", { headers: { withCredentials: true } })
+        axios.get("http://localhost:9000/api/account/logout", { headers: { withCredentials: true } })
             .then(res => {
                 removeCookie('userId')
                 navigate("/")
