@@ -16,7 +16,7 @@ export default function User() {
     const navigate = useNavigate()
 
     function fetch() {
-        axios.get(`api/users/${cookies.userId}`, { headers: { withCredentials: true } })
+        axios.get(`/api/users/${cookies.userId}`, { headers: { withCredentials: true } })
             .then(res => {
                 console.log(res);
                 setUser(res.data)
