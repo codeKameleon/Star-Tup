@@ -38,9 +38,9 @@ export default function Chat() {
             </Link>
           );
         })
-          : 
+          :
           <p className='text-white pt-48'>Add <Link to={"/app/contact"} className='text-[#7aa5d2] hover:text-[#6798cc]'>contact</Link> to start chatting</p>
-            }
+        }
       </main>
       <Navbar page="chat" />
     </>

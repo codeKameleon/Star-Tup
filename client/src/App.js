@@ -13,7 +13,7 @@ function App() {
     <div className="w-full h-screen bg-[#111b21]">
       <CookiesProvider>
         <Routes>
-        <Route exact path="/" element={<Navigate replace to="/app" />} />
+          <Route exact path="/" element={<Navigate replace to="/app" />} />
           <Route exact path="/app" element={<Home />} />
           <Route exact path="/app/register" element={<Register />} />
           <Route exact path="/app/login" element={<Login />} />

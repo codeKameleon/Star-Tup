@@ -18,7 +18,7 @@ export default function Header({ page }) {
             .then(res => {
                 setFirstname(res.data.firstname[1]);
             })
-            .catch(err => navigate("app/login") + alert("You need to login first"))
+            .catch(err => navigate("/app/login") + alert("You need to login first"))
     }, []);
 
     return (
