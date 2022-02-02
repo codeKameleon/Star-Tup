@@ -6,6 +6,7 @@ export default function Navbar({ page }) {
   return (
     <nav className='block fixed inset-x-0 bottom-0 z-10'>
       <div className='flex justify-around items-center h-14 bg-[#202c33] border-t-4 border-[#111b21]'>
+        {/* Change button color on chat & contact page */}
         {page === "chat" ?
           <>
             <Link to="/app/chat">

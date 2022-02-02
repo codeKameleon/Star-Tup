@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Register() {
+  // Register data / Register error / Navigate
   const [data, setData] = useState({
     email: "",
     firstname: "",
@@ -13,9 +14,9 @@ export default function Register() {
     motto: ""
   })
   const [error, setError] = useState({})
-
   const navigate = useNavigate()
 
+  // Post register
   const handleSubmit = e => {
     e.preventDefault()
 
@@ -30,14 +31,18 @@ export default function Register() {
     <>
       <main className='flex flex-col items-center sm:px-6 lg:px-8 h-full'>
         <header>
+          {/* Go back to landing page */}
           <Link to={"/app"}>
             <button className='px-5 py-4 text-white'><i className="fas fa-chevron-left"></i></button>
           </Link>
+          {/* Logo */}
           <img src="../logo.png" alt="logo" className='w-3/4 m-auto mb-10' />
         </header>
 
+        {/* Error message */}
         {error.length > 0 ? <p className='text-[#b33232] text-sm m-auto text-center'>{error}</p> : null}
 
+        {/* Register form */}
         <form onSubmit={e => handleSubmit(e)} className='mt-0 space-y-4 flex flex-col'>
           <h2 className='mt-6 text-center text-2xl font-extrabold text-white'>Register an account</h2>
           <label htmlFor="email" className='sr-only'>Email</label>

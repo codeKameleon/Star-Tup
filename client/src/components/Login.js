@@ -6,15 +6,16 @@ axios.defaults.withCredentials = true
 
 
 export default function Login() {
+  // Login detail / Error on login / Cookies / Navigate
   const [data, setData] = useState({
     email: "",
     password: "",
   })
   const [error, setError] = useState({})
   const [cookies, setCookie] = useCookies(['userId']);
-
   const navigate = useNavigate()
 
+  // Post login
   const handleSubmit = e => {
     e.preventDefault()
 
@@ -30,17 +31,20 @@ export default function Login() {
     <>
       <main className='flex flex-col items-center sm:px-6 lg:px-8 h-full'>
         <header>
+          {/* Go back to landing page screen */}
           <Link to={"/app"}>
             <button className='px-5 py-4 text-white'><i className="fas fa-chevron-left"></i></button>
           </Link>
           <img src="../logo.png" alt="logo" className='w-3/4 m-auto mb-10' />
         </header>
+        {/* Error message */}
         {error.length > 0 ?
           <div className='absolute w-3/4 text-center mt-72'>
             <p className='text-[#fa5f5f] text-xl'>{error}</p>
           </div>
           : null}
 
+        {/* Login form */}
         <form onSubmit={(e) => handleSubmit(e)} className='mt-0 space-y-4 flex flex-col'>
           <h2 className='mt-6 text-center text-2xl font-extrabold text-white'>Login to your account</h2>
           <label htmlFor="email" className='sr-only'>Email</label>

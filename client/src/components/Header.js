@@ -5,14 +5,17 @@ import { useCookies } from 'react-cookie';
 import Avatar from './Avatar';
 
 export default function Header({ page }) {
+    // User firstname / Cookies / Navigate
     const [firstname, setFirstname] = useState([])
     const [cookies, setCookie, removeCookie] = useCookies(['userId']);
     const navigate = useNavigate()
 
+    // Navigate to user profil
     function user() {
         navigate("/app/user")
     }
 
+    // Fetch user info
     useEffect(() => {
         axios.get(`/api/users/${cookies.userId}`)
             .then(res => {

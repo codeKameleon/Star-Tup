@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
 export default function User() {
+    // User data / Update info / Update popup message / Cookies / Navigate
     const [user, setUser] = useState([])
     const [update, setUpdate] = useState({
         email: "",
@@ -12,9 +13,9 @@ export default function User() {
     })
     const [updateMessage, setUpdateMessage] = useState(false)
     const [cookies, setCookie, removeCookie] = useCookies(['userId']);
-
     const navigate = useNavigate()
 
+    // Fetch user info
     function fetch() {
         axios.get(`/api/users/${cookies.userId}`, { headers: { withCredentials: true } })
             .then(res => {
@@ -28,6 +29,7 @@ export default function User() {
         fetch()
     }, []);
 
+    // Logout
     function logout() {
         axios.get("/api/account/logout", { headers: { withCredentials: true } })
             .then(res => {
@@ -37,6 +39,7 @@ export default function User() {
             .catch(err => console.log(err))
     }
 
+    // Format date
     function date() {
         let date = new Date(user.birthdate).getDate()
         let month = new Date(user.birthdate).getMonth() + 1
@@ -44,6 +47,7 @@ export default function User() {
         return date + "/" + month + "/" + year
     }
 
+    // Update user info
     const handleSubmit = e => {
         e.preventDefault()
 
@@ -55,6 +59,7 @@ export default function User() {
             .catch(err => console.log(err.response))
     }
 
+    // Hide popup message
     function handleClick(e) {
         e.preventDefault()
         setUpdateMessage(false)
@@ -63,6 +68,7 @@ export default function User() {
     return (
         <>
             <header className='flex justify-between w-full h-16 items-center'>
+                {/* Go back to chat */}
                 <Link to={"/app/chat"}>
                     <button className='px-5 py-4 text-white'><i className="fas fa-chevron-left"></i></button>
                 </Link>
@@ -70,13 +76,14 @@ export default function User() {
             </header>
 
             <main className='h-5/6 flex flex-col justify-around items-center'>
+                {/* Popup message */}
                 {updateMessage === false ? null :
                     <div className='absolute top-20 p-2 rounded-xl text-center bg-white flex justify-center items-center'>
                         Your info is updated
                         <button className='rounded-full text-2xl text-[#7aa5d2] ml-4' onClick={(e) => handleClick(e)}><i className="fas fa-check-circle"></i></button>
                     </div>
                 }
-
+                {/* Account info */}
                 <div className='w-full flex flex-col justify-center'>
                     <div className='flex bg-[#202c33] w-11/12 h-12 justify-center items-center rounded-full m-auto mt-4'>
                         <h1 className='text-2xl text-white'>Account info</h1>
@@ -89,6 +96,7 @@ export default function User() {
                         <p>Motto : {user.motto === 'undefined' ? "" : user.motto}</p>
                     </div>
                 </div>
+                {/* Update info */}
                 <div className='w-full flex flex-col items-center justify-center'>
                     <div className='flex bg-[#202c33] w-11/12 h-12 justify-center items-center rounded-full mt-4'>
                         <h1 className='text-2xl text-white'>Update info </h1>

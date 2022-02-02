@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Random avatar for user
 export default function Avatar(letter) {
     if ((letter === "a") || (letter === "q") || (letter === "w")) {
         return <img src="https://img.icons8.com/plasticine/100/000000/rick-sanchez.png" alt='avatar' />
