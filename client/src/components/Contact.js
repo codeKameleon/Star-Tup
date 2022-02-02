@@ -20,13 +20,13 @@ export default function Contact() {
                 setUsers(res.data.users)
                 setUserId(res.data.authenticated_user._id)
             })
-            .catch(err => navigate("/login") + alert("You need to login first"))
+            .catch(err => navigate("/app/login") + alert("You need to login first"))
     }, []);
 
     function startConv(e) {
         axios.post(`/api/conversations`, [e.target.id], { headers: { withCredentials: true }, credentials: 'same-origin' })
             .then(res => {
-                navigate("/chat/" + res.data._id + "/" + e.target.name + "/" + e.target.id, { replace: true })
+                navigate("/app/chat/" + res.data._id + "/" + e.target.name + "/" + e.target.id, { replace: true })
             })
             .catch(err => err.response.data.message === "Conversation already exists" ? navigate("/chat/") :
                 console.log(err.response.data.message))
@@ -43,7 +43,6 @@ export default function Contact() {
                                 <button className='w-12 h-12 rounded-full bg-white mr-4'>{Avatar(user.firstname[1])}</button>
                                 <div id={user._id}>
                                     <h1 id={user._id} className='text-lg font-medium text-white'>{cookies.userId === user._id ? "Me" : user.firstname}</h1>
-                                    {console.log(user.motto.length)}
                                     <p id={user._id} className='text-sm text-slate-500 truncate'>{user.motto.length >= 20 ? user.motto.substring(0,20) + "..." : user.motto}</p>
                                 </div>
                             </div>

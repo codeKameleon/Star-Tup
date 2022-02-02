@@ -8,12 +8,12 @@ export default function Navbar({ page }) {
       <div className='flex justify-around items-center h-14 bg-[#202c33] border-t-4 border-[#111b21]'>
         {page === "chat" ?
           <>
-            <Link to="/chat">
+            <Link to="/app/chat">
               <button className='text-white hover:text-white'>
                 <i className="fas fa-comments text-3xl"></i>
               </button>
             </Link>
-            <Link to="/contact">
+            <Link to="/app/contact">
               <button className='text-[#7aa5d2] hover:text-white'>
                 <i className="fas fa-address-book text-3xl"></i>
               </button>
@@ -21,12 +21,12 @@ export default function Navbar({ page }) {
           </>
           :
           <>
-            <Link to="/chat">
+            <Link to="/app/chat">
               <button className='text-[#7aa5d2] hover:text-white'>
                 <i className="fas fa-comments text-3xl"></i>
               </button>
             </Link>
-            <Link to="/contact">
+            <Link to="/app/contact">
               <button className='text-white hover:text-white'>
                 <i className="fas fa-address-book text-3xl"></i>
               </button>

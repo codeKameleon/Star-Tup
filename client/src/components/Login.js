@@ -21,7 +21,7 @@ export default function Login() {
     axios.post("/api/account/login", data, { credentials: 'same-origin' })
       .then(res => {
         setCookie('userId', res.data.user_id)
-        navigate("/chat", { replace: true })
+        navigate("/app/chat", { replace: true })
       })
       .catch(err => setError(err.response.data.message))
   }
@@ -30,13 +30,16 @@ export default function Login() {
     <>
       <main className='flex flex-col items-center sm:px-6 lg:px-8 h-full'>
         <header>
-          <Link to={"/"}>
+          <Link to={"/app"}>
             <button className='px-5 py-4 text-white'><i className="fas fa-chevron-left"></i></button>
           </Link>
-          <img src="logo.png" alt="logo" className='w-3/4 m-auto mb-10' />
-          {error.length > 0 ? <p className='text-[#b33232] text-sm m-auto text-center'>{error}</p> : null}
+          <img src="../logo.png" alt="logo" className='w-3/4 m-auto mb-10' />
         </header>
-
+        {error.length > 0 ?
+          <div className='absolute w-3/4 text-center mt-72'>
+            <p className='text-[#fa5f5f] text-xl'>{error}</p>
+          </div>
+          : null}
 
         <form onSubmit={(e) => handleSubmit(e)} className='mt-0 space-y-4 flex flex-col'>
           <h2 className='mt-6 text-center text-2xl font-extrabold text-white'>Login to your account</h2>
@@ -48,8 +51,9 @@ export default function Login() {
 
 
           <button type='submit' className='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#7aa5d2] hover:bg-[#6798cc] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>Login</button>
-          <p className='text-white text-center'>Don't have an account ? <Link to="/register" className='text-[#7aa5d2] hover:text-[#6798cc]'>Register</Link></p>
+          <p className='text-white text-center'>Don't have an account ? <Link to="/app/register" className='text-[#7aa5d2] hover:text-[#6798cc]'>Register</Link></p>
         </form>
+
       </main>
     </>
   );
