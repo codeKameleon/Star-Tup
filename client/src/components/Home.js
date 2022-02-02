@@ -2,11 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
+    // Landing page
     return (
         <main className='flex flex-col flex-auto items-center w-full h-screen'>
             <section>
+                {/* Logo */}
                 <img src="logo.png" alt="logo" className='w-3/4 m-auto mb-10' />
 
+                {/* Basic chat exemple */}
                 <div className='flex flex-col items-start text-left w-full pl-2 text-white break-words'>
                     <h1 className='pl-2'>Star-Tup :</h1>
                     <p className='max-w-xs p-2 pl-4 pr-4 bg-[#202c33] rounded-xl ml-2'>Welcome to Star-Up Chat app</p>
@@ -19,12 +22,13 @@ export default function Home() {
             </section>
 
             <section className='flex flex-col w-80 justify-center mt-24'>
+                {/* Login page */}
                 <Link to="/app/login">
                     <button className='group relative w-full flex justify-center my-4 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#7aa5d2] hover:bg-[#6798cc] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
                         Login
                     </button>
                 </Link>
-
+                {/* Register page */}
                 <Link to="/app/register">
                     <button className='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#7aa5d2] hover:bg-[#6798cc] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
                         Register
