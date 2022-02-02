@@ -31,6 +31,30 @@ const getMessages  = async(req, res) => {
     }
 }
 
+const getLastMessage = async(req, res) => {
+    // Check if the id param passed in query is a valid ObjectId
+    const ObjectID = mongoose.Types.ObjectId
+
+    if(!ObjectID.isValid(req.params.conversationId)) {
+        return res.status(400).send({ message: "Conversation id is not valid" })
+    }
+
+    // Check if the user is allowed to access messages from a conversation
+    const conversation = await ConversationModel.findOne(
+        { members:  { $all: [req.user._id]}, _id: req.params.conversationId  },
+    )
+
+    if (!conversation) {
+        return res.status(400).send({ message: "You are not allowed to send a message to this conversation" })
+    }
+
+    const lastMessage = await MessageModel.find({
+        conversationId: req.params.conversationId
+    }).sort({createdAt: -1}).limit(1)
+
+    res.status(200).send(lastMessage)
+}
+
 const createNewMessage = async(req, res) => {
     try {
         // Check if the id param passed in query is a valid ObjectId
@@ -92,5 +116,6 @@ const deleteMessage = async(req, res) => {
 module.exports = { 
     createNewMessage,
     getMessages,
+    getLastMessage,
     deleteMessage
 }
