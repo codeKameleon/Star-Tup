@@ -147,7 +147,7 @@ else {
 }
 
 // Handling non matching request from the client
-app.all((req, res) => {
+app.all('*',(req, res) => {
     res.status(404).send({ message: "Page not found on the server" })
 })
 
