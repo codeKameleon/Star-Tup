@@ -10,7 +10,7 @@ export default function Header({ page }) {
     const navigate = useNavigate()
 
     function user() {
-        navigate("app/user")
+        navigate("/app/user")
     }
 
     useEffect(() => {
