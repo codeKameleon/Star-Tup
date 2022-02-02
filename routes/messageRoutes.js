@@ -9,8 +9,8 @@ const router =  express.Router()
 // @route GET /api/messages/:conversationId
 router.get('/:conversationId', verifyToken, getMessages)
 
-// @description GET all messages from a conversation
-// @route GET /api/messages/:conversationId
+// @description GET last message from a conversation
+// @route GET /api/messages/:conversationId/last
 router.get('/:conversationId/last', verifyToken, getLastMessage)
 
 // @description POST a message in a conversation
