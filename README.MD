@@ -1,29 +1,31 @@
-## StartUp fullStack Project
+# Star Tup - Realtime chat application
 
-### Features to add
+As a part of our BeCode training, this fullstack project is a mobile-first chat app that allow users to create conversations and send messages in realtime with other registered users.
 
-### Frontend requirements
+The app is hosted on [Heroku](becode-star-tup.herokuapp.com/)
 
-These are the views you should be creating
+## Technology Stack
+| ------| 
+| MongoDB |
+| Express |
+| React |
+| NodeJS |
+| Socket.io |
 
-- A screen to register
-- A screen to login
-- ~~A match-making view~~
-- A list of conversations ~~(once you have matched)~~
-- The conversation details
-- (optional) A settings view to edit user details
+## API Documentation
 
-### Backend requirements
+### Register
+### Login
+### Logout
 
-Design an API that allows people to connect with each other. You should provide the following functionalities :
+### Users
+### User
 
-- An endpoint to register (POST /api/register)
-- An endpoint to login/logout (POST /api/login)
-- ~~An endpoint that list potential matches (GET /api/matches)~~
-- An enpoint that list all users (but without their full name) (/api/users)
-- An endpoint that list all of a user conversations (/api/conversations/)
-- An enpoint to retrieve and send message to a conversation (POST+GET /api/conversations/[id])
-- (optional) A user-settings endpoint to edit user profile (PATCH /api/users/[id])
+### Conversations
+### Conversation
+
+### Messages
+### Message
 
 #### Authors
 - [Axel Tavormina](https://github.com/codeKameleon) - Backend

@@ -146,6 +146,11 @@ else {
     })
 }
 
+// Handling non matching request from the client
+app.use((req, res, next) => {
+    res.status(404).send({ message: "Page not found on the server" })
+})
+
 // Server
 const server = app.listen(port, () => console.log(`Server started and running at http://localhost:${port}`))
 
