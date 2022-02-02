@@ -9,7 +9,7 @@ export default function User() {
         email: "",
         password: "",
         motto: ""
-      })
+    })
     const [updateMessage, setUpdateMessage] = useState(false)
     const [cookies, setCookie, removeCookie] = useCookies(['userId']);
 
@@ -45,19 +45,19 @@ export default function User() {
 
     const handleSubmit = e => {
         e.preventDefault()
-    
-        axios.put(`/api/users/${cookies.userId}`, update)
-          .then(res => {
-              fetch()
-              setUpdateMessage(true)
-          })
-          .catch(err => console.log(err.response))
-      }
 
-      function handleClick(e) {
+        axios.put(`/api/users/${cookies.userId}`, update)
+            .then(res => {
+                fetch()
+                setUpdateMessage(true)
+            })
+            .catch(err => console.log(err.response))
+    }
+
+    function handleClick(e) {
         e.preventDefault()
         setUpdateMessage(false)
-      }
+    }
 
     return (
         <>
@@ -69,11 +69,11 @@ export default function User() {
             </header>
 
             <main className='h-5/6 flex flex-col justify-around items-center'>
-                {updateMessage === false ? null : 
-                <div className='absolute top-20 p-2 rounded-xl text-center bg-white flex justify-center items-center'>
-                    Your info is updated
-                    <button className='rounded-full text-2xl text-[#7aa5d2] ml-4' onClick={(e) => handleClick(e)}><i className="fas fa-check-circle"></i></button>
-                </div>
+                {updateMessage === false ? null :
+                    <div className='absolute top-20 p-2 rounded-xl text-center bg-white flex justify-center items-center'>
+                        Your info is updated
+                        <button className='rounded-full text-2xl text-[#7aa5d2] ml-4' onClick={(e) => handleClick(e)}><i className="fas fa-check-circle"></i></button>
+                    </div>
                 }
 
                 <div className='w-full flex flex-col justify-center'>
@@ -95,15 +95,15 @@ export default function User() {
                     <div className='flex flex-col mt-4 w-full justify-center'>
                         <label className='text-white ml-14 mb-2'>Email :</label>
                         <br />
-                        <input type="email" placeholder='new email' className='w-3/4 h-8 rounded-full pl-4 m-auto mb-2' onChange={e => setUpdate({ ...update, email: e.target.value })}/>
-                        
+                        <input type="email" placeholder='new email' className='w-3/4 h-8 rounded-full pl-4 m-auto mb-2' onChange={e => setUpdate({ ...update, email: e.target.value })} />
+
                         <label className='text-white ml-14 mb-2'>Password :</label>
                         <br />
-                        <input type="password" placeholder='new password' className='w-3/4 h-8 rounded-full pl-4 m-auto mb-2' onChange={e => setUpdate({ ...update, password: e.target.value })}/>
-                        
+                        <input type="password" placeholder='new password' className='w-3/4 h-8 rounded-full pl-4 m-auto mb-2' onChange={e => setUpdate({ ...update, password: e.target.value })} />
+
                         <label className='text-white ml-14 mb-2 md:ml-48 xl:ml-72'>Motto :</label>
                         <br />
-                        <input type="text" placeholder='new motto' className='w-3/4 h-8 rounded-full pl-4 m-auto mb-2' onChange={e => setUpdate({ ...update, motto: e.target.value })}/>
+                        <input type="text" placeholder='new motto' className='w-3/4 h-8 rounded-full pl-4 m-auto mb-2' onChange={e => setUpdate({ ...update, motto: e.target.value })} />
                         <button className='p-2 w-24 bg-[#7aa5d2] rounded-lg m-auto mt-8' onClick={(e) => handleSubmit(e)}>Update</button>
                     </div>
                 </div>
