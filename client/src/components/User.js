@@ -18,6 +18,7 @@ export default function User() {
     function fetch() {
         axios.get(`api/users/${cookies.userId}`, { headers: { withCredentials: true } })
             .then(res => {
+                console.log(res);
                 setUser(res.data)
             })
             .catch(err => console.log(err))
