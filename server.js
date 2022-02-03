@@ -132,7 +132,7 @@ app.get('/api', (req, res) => res.send({
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, "/client/build")));
 
-    app.get("*", (req, res) => {
+    app.get("/*", (req, res) => {
         res.redirect("/app/")
     })
 
