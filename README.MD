@@ -2,7 +2,7 @@
 
 As a part of our BeCode training, this fullstack project is a mobile-first chat app that allow users to create conversations and send messages in realtime with other registered users.
 
-The app is hosted on [Heroku](becode-star-tup.herokuapp.com/)
+The app is hosted on [Heroku](https://becode-star-tup.herokuapp.com/)
 
 ## Technology Stack
 | ------| 
