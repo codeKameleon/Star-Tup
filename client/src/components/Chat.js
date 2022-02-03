@@ -30,10 +30,9 @@ export default function Chat() {
           return (
             <>
               {/* If there is at least 2 member */}
-              {conv.member.length > 1 ?
+              {conv.members.length > 1 ?
                 // Link to conversation with conv id / other member name / other member id
-                <Link to={"/app/chat/" + conv._id + "/" + conv.members.find(member => member._id !== cookies.userId).firstname + "/" + conv.members.find(member => member._id !== cookies.userId)._id} key={conv._id}
-                  className='flex py-4 w-11/12 justify-between items-center my-1 h-20 bg-[#202c33] px-4 rounded-lg'>
+                <Link to={"/app/chat/" + conv._id + "/" + conv.members.find(member => member._id !== cookies.userId).firstname + "/" + conv.members.find(member => member._id !== cookies.userId)._id} key={conv._id}className='flex py-4 w-11/12 justify-between items-center my-1 h-20 bg-[#202c33] px-4 rounded-lg'>
                   <div className='flex w-full items-center'>
                     <button className='w-12 h-12 rounded-full bg-white mr-4'>{Avatar(conv.members.find(member => member._id !== cookies.userId).firstname[1])}</button>
                     <div>
