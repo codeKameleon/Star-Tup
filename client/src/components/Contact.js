@@ -14,17 +14,17 @@ export default function Contact() {
 
     // Fetch all user
     useEffect(() => {
-        axios.get(`/api/users`)
+        axios.get(`http://localhost:9000/api/users`)
             .then(res => {
                 console.log(res.data.users);
                 setUsers(res.data.users)
             })
-            .catch(err => navigate("/app/login") + alert("You need to login first"))
+            // .catch(err => navigate("/app/login") + alert("You need to login first"))
     }, []);
 
     // Start selected user to chat list
     function startConv(e) {
-        axios.post(`/api/conversations`, [e.target.id], { headers: { withCredentials: true }, credentials: 'same-origin' })
+        axios.post(`http://localhost:9000/api/conversations`, [e.target.id], { headers: { withCredentials: true }, credentials: 'same-origin' })
             .then(res => {
                 navigate("/app/chat/" + res.data._id + "/" + e.target.name + "/" + e.target.id, { replace: true })
             })
@@ -35,11 +35,11 @@ export default function Contact() {
     return (
         <>
             <Header page="Contacts" />
-            <main className='flex flex-col py-16 items-center bg-[#111b21] md:col-auto'>
+            <main className='flex flex-col py-16 items-center bg-[#111b21] md:col-auto w-full md:flex-row md:flex-wrap md:px-32'>
                 {/* if there is atleast one user map */}
                 {users.length > 0 ? users.map((user, index) => {
                     return (
-                        <article key={user._id} id={user._id} className='flex py-4 w-96 justify-between items-center my-2 h-20 bg-[#202c33] px-4 rounded-lg'>
+                        <article key={user._id} id={user._id} className='flex py-4 w-96 justify-between items-center my-2 h-20 bg-[#202c33] px-4 rounded-lg md:mr-4 md:m-auto md:my-2'>
                             <div className='flex'>
                                 <button className='w-12 h-12 rounded-full bg-white mr-4'>{Avatar(user.firstname[1])}</button>
                                 <div id={user._id}>

@@ -14,7 +14,7 @@ export default function Chat() {
 
   // Fetch all user conversation
   useEffect(() => {
-    axios.get("/api/conversations/")
+    axios.get("http://localhost:9000/api/conversations/")
       .then(res => {
         setConv(res.data)
       })

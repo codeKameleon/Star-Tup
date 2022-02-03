@@ -17,7 +17,7 @@ export default function Header({ page }) {
 
     // Fetch user info
     useEffect(() => {
-        axios.get(`/api/users/${cookies.userId}`)
+        axios.get(`http://localhost:9000/api/users/${cookies.userId}`)
             .then(res => {
                 setFirstname(res.data.firstname[1]);
             })
