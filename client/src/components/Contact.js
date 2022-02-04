@@ -19,7 +19,7 @@ export default function Contact() {
                 console.log(res.data.users);
                 setUsers(res.data.users)
             })
-            // .catch(err => navigate("/app/login") + alert("You need to login first"))
+        // .catch(err => navigate("/app/login") + alert("You need to login first"))
     }, []);
 
     // Start selected user to chat list
@@ -39,7 +39,7 @@ export default function Contact() {
                 {/* if there is atleast one user map */}
                 {users.length > 0 ? users.map((user, index) => {
                     return (
-                        <article key={user._id} id={user._id} className='flex py-4 w-96 justify-between items-center my-2 h-20 bg-[#202c33] px-4 rounded-lg md:mr-4 md:m-auto md:my-2'>
+                        <article key={user._id} id={user._id} className='flex py-4 w-96 justify-between items-center my-2 h-20 bg-[#202c33] px-4 rounded-lg md:mr-4 md:my-2'>
                             <div className='flex'>
                                 <button className='w-12 h-12 rounded-full bg-white mr-4'>{Avatar(user.firstname[1])}</button>
                                 <div id={user._id}>
