@@ -6,6 +6,8 @@ import { useCookies } from 'react-cookie';
 import { Link, useNavigate } from 'react-router-dom';
 import Avatar from './Avatar';
 
+let data = []
+
 export default function Chat() {
   // Conversation / Cookies / Navigate
   const [conv, setConv] = useState([])
@@ -17,18 +19,20 @@ export default function Chat() {
     axios.get("http://localhost:9000/api/conversations/")
       .then(res => {
         setConv(res.data)
-        res.data.map(id => {
-          axios.get(`http://localhost:9000/api/messages/${id._id}/last`)
-            .then(res2 => {
-              setLastMsg(...lastMsg, [{
-                msg: res2.data[0].content,
-                data: res2.data[0].createdAt,
-                sender: res2.data[0].sender
-              }])
-              console.log(lastMsg);
-            })
-            .catch(err2 => console.log(err2))
-        })
+        if (lastMsg.length === 0) {
+          res.data.map(id => {
+            axios.get(`http://localhost:9000/api/messages/${id._id}/last`)
+              .then(res2 => {
+                data.push({
+                  msg: res2.data[0].content,
+                  data: res2.data[0].createdAt,
+                  sender: res2.data[0].sender
+                })
+                setLastMsg(data)
+              })
+              .catch(err2 => console.log(err2))
+          })
+        }
       })
       .catch(err => console.log(err))
   }, []);
@@ -57,7 +61,8 @@ export default function Chat() {
                     <button className='w-12 h-12 rounded-full bg-white mr-4'>{Avatar(conv.members.find(member => member._id !== cookies.userId) ? conv.members.find(member => member._id !== cookies.userId).firstname[1] : conv.members[0].firstname[1])}</button>
                     <div>
                       <h1 className='text-lg font-medium text-white'>{conv.members.find(member => member._id !== cookies.userId) ? conv.members.find(member => member._id !== cookies.userId).firstname : "Me"}</h1>
-                      {lastMsg.length > 0 ? console.log("sadge") : console.log(lastMsg)}
+                      {/* NOT WORKING ATM */}
+                      {console.log(lastMsg)}
                     </div>
                   </div>
                 </Link>
