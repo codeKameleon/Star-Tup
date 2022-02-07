@@ -5,8 +5,10 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import Avatar from './Avatar';
+import { io } from "socket.io-client";
 
 let data = []
+let socket
 
 export default function Chat() {
   // Conversation / Cookies
@@ -14,34 +16,60 @@ export default function Chat() {
   const [lastMsg, setLastMsg] = useState([])
   const [load, setLoad] = useState(false)
   const [cookies] = useCookies(['userId']);
+  const [socketConnected, setSocketConnected] = useState(false)
+  const [connected, setConnected] = useState([])
 
+  // Socket io connection
+  useEffect(() => {
+    socket = io.connect("ws://localhost:9000", {
+      forceNew: false,
+      secure: true,
+      transports: ['websocket']
+    });
+    socket.emit('setup', cookies.userId)
+    socket.on('connected', (test) => {
+      console.log(test)
+    })
+    console.log(socketConnected);
+  }, []);
+
+  // console.log(io.sockets.sockets)
   useEffect(() => {
     axios.get("http://localhost:9000/api/conversations/")
       .then(res => {
         setConv(res.data)
-        if (lastMsg.length === 0) {
+        if ((data.length === 0)) {
           res.data.map(id => {
             axios.get(`http://localhost:9000/api/messages/${id._id}/last`)
               .then(res2 => {
-                data.push({
-                  msg: res2.data[0].content,
-                  date: new Date(res2.data[0].createdAt),
-                  sender: res2.data[0].sender
-                })
-                setLastMsg(data)
-                if (res.data.length === data.length) {
+                if (res2.data.length > 0) {
+                  data.push({
+                    id: res2.data[0].conversationId,
+                    msg: res2.data[0].content,
+                    date: new Date(res2.data[0].createdAt),
+                    sender: res2.data[0].sender
+                  })
+                  setLastMsg(data)
+                  if (data.length >= res.data.length) {
+                    setLoad(true)
+                  }
+                }
+                else {
                   setLoad(true)
                 }
               })
               .catch(err2 => console.log(err2))
           })
         }
+        else if ((data.length > 0) && (lastMsg.length === 0)) {
+          setLastMsg(data)
+          setLoad(true)
+        }
       })
       .catch(err => console.log(err))
   }, []);
 
   // Date format
-
   function changeDate(date) {
     const todayDate = new Date()
     // Not Same Year dd/mm/yyyy
@@ -64,7 +92,6 @@ export default function Chat() {
 
   return (
     <>
-
       <Header page="Discussions" />
       {/* Wait till loading */}
       {load === false ?
@@ -90,6 +117,11 @@ export default function Chat() {
                       {/* Avatar icon */}
                       <button className='w-12 h-12 rounded-full bg-white mr-4'>
                         {Avatar(conv.members.find(member => member._id !== cookies.userId) ? conv.members.find(member => member._id !== cookies.userId).firstname[1] : conv.members[0].firstname[1])}
+                        {socketConnected === true ?
+                          <div className='bg-green-500 w-4 h-4 rounded-full ml-8 mb-8 bottom-3 relative' />
+                          :
+                          null
+                        }
                       </button>
                       <div>
                         {/* Username */}
@@ -97,11 +129,13 @@ export default function Chat() {
                           {conv.members.find(member => member._id !== cookies.userId) ? conv.members.find(member => member._id !== cookies.userId).firstname : "Me"}
                         </h1>
                         {/* Last message */}
-                        <p className='text-sm text-slate-500 truncate'>
-                          {lastMsg[index].sender === cookies.userId ? "Me : " : conv.members.find(member => member._id !== cookies.userId).firstname}
-                          {lastMsg[index].msg.length >= 20 ? lastMsg[index].msg.substring(0, 25) + "..." : lastMsg[index].msg}
-                          {" - " + changeDate(lastMsg[index].date)}
-                        </p>
+                        {/* {lastMsg.find(msg => msg.id === conv._id ?
+                          <p className='text-sm text-slate-500 truncate'>
+                            {msg.sender === cookies.userId ? "Me : " : conv.members.find(member => member._id !== cookies.userId).firstname}
+                            {msg.msg.length >= 20 ? msg.msg.substring(0, 25) + "..." : msg.msg}
+                            {" - " + changeDate(msg.date)}
+                          </p>
+                          : null)} */}
                       </div>
                     </div>
                   </Link>

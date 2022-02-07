@@ -26,7 +26,8 @@ export default function Conversation() {
             transports: ['websocket']
         });
         socket.emit('setup', user)
-        socket.on('connection', () => setSocketConnected(true))
+        socket.on('connected', () => setSocketConnected(true))
+        console.log(socketConnected);
     }, []);
 
     // Fetch conv & fetch conv on new message

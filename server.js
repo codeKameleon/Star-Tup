@@ -147,7 +147,7 @@ else {
 }
 
 // Handling non matching request from the client
-app.all('*',(req, res) => {
+app.all('*', (req, res) => {
     res.status(404).send({ message: "Page not found on the server" })
 })
 
@@ -160,7 +160,7 @@ const io = require('socket.io')(server, {
     agent: false,
     transport: ['websocket'],
     cors: {
-        origin: "http://localhost:3000"
+        origin: "ws://localhost:3000"
     }
 })
 
