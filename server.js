@@ -178,6 +178,10 @@ io.on("connection", (socket) => {
         console.log('User join conversation: ' + conversation);
     })
 
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    })
+
     socket.on('new message', (message) => {
         console.log('message', message)
         socket.to(message.receiverId).emit("message received", message.message.content);
