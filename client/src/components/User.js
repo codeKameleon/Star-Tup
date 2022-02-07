@@ -39,11 +39,9 @@ export default function User() {
     }
 
     // Format date
-    function date() {
-        let date = new Date(user.birthdate).getDate()
-        let month = new Date(user.birthdate).getMonth() + 1
-        let year = new Date(user.birthdate).getFullYear()
-        return date + "/" + month + "/" + year
+    function date(date) {
+        const newDate = new Date(date)
+        return newDate.toLocaleDateString()
     }
 
     // Update user info
@@ -91,7 +89,7 @@ export default function User() {
                         <p>First name : {user.firstname}</p>
                         <p>Last name : {user.lastname}</p>
                         <p>Email : {user.email}</p>
-                        <p>Birthdate : {!user.birthdate ? null : date()}</p>
+                        <p>Birthdate : {!user.birthdate ? null : date(user.birthdate)}</p>
                         <p>Motto : {user.motto === 'undefined' ? "" : user.motto}</p>
                     </div>
                 </div>
