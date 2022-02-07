@@ -13,7 +13,7 @@ export default function Chat() {
   const [conv, setConv] = useState([])
   const [lastMsg, setLastMsg] = useState([])
   const [load, setLoad] = useState(false)
-  const [cookies, setCookie, removeCookie] = useCookies(['userId']);
+  const [cookies] = useCookies(['userId']);
 
   useEffect(() => {
     axios.get("http://localhost:9000/api/conversations/")
@@ -50,7 +50,7 @@ export default function Chat() {
     }
     // Same Day hh/mm
     else if (todayDate.toLocaleDateString('en-GB') === date.toLocaleDateString('en-GB')) {
-      let o = new Intl.DateTimeFormat("en-GB", {
+      const o = new Intl.DateTimeFormat("en-GB", {
         hour: "2-digit",
         minute: "2-digit"
       });

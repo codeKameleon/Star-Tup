@@ -12,7 +12,7 @@ export default function Login() {
     password: "",
   })
   const [error, setError] = useState({})
-  const [cookies, setCookie] = useCookies(['userId']);
+  const [setCookie] = useCookies(['userId']);
   const navigate = useNavigate()
 
   // Post login

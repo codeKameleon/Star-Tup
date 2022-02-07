@@ -9,7 +9,7 @@ import Avatar from './Avatar';
 export default function Contact() {
     // Conversation / Cookies / Navigate
     const [users, setUsers] = useState([])
-    const [cookies, setCookie, removeCookie] = useCookies(['userId']);
+    const [cookies] = useCookies(['userId']);
     const navigate = useNavigate()
 
     // Fetch all user

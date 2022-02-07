@@ -11,7 +11,7 @@ export default function Conversation() {
     // All messages / Send new message / Cookies / New message received / Conv id receiver name & id / Autoscroll / socketio
     const [conv, setConv] = useState([])
     const [message, setMessage] = useState({ content: "" })
-    const [cookies, setCookie, removeCookie] = useCookies(['userId']);
+    const [cookies] = useCookies(['userId']);
     const [updatedMessage, setUpdatedMessage] = useState(false)
     const { id, name, receiverId } = useParams();
     const scrollRef = useRef()

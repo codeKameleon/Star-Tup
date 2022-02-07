@@ -4,11 +4,11 @@ import { useCookies } from 'react-cookie';
 
 export default function Message(message) {
     // Id & name of receiver / Cookies
-    const { id, name } = useParams();
-    const [cookies, setCookie, removeCookie] = useCookies(['userId']);
+    const { name } = useParams();
+    const [cookies] = useCookies(['userId']);
 
     // Check if message is a image or gif
-    const isImgLink = (url) => {
+    function isImgLink(url) {
         if (typeof url !== 'string') {
             return false;
         }

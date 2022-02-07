@@ -12,7 +12,7 @@ export default function User() {
         motto: ""
     })
     const [updateMessage, setUpdateMessage] = useState(false)
-    const [cookies, setCookie, removeCookie] = useCookies(['userId']);
+    const [cookies, removeCookie] = useCookies(['userId']);
     const navigate = useNavigate()
 
     // Fetch user info
