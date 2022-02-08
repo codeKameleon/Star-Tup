@@ -30,7 +30,7 @@ export default function User() {
 
     // Logout
     function logout() {
-        axios.get("/api/account/logout", { headers: { withCredentials: true } })
+        axios.get("http//localhost:9000/api/account/logout", { headers: { withCredentials: true } })
             .then(res => {
                 removeCookie('userId')
                 navigate("/app")

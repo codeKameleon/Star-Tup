@@ -22,7 +22,7 @@ const port = process.env.PORT
 connectDB()
 
 // Middlewares
-app.use(cors({ origin: "https://becode-star-tup.herokuapp.com", credentials: true }))
+app.use(cors({ origin:"https://wwww.becode-star-tup.herokuapp.com", credentials: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser())
@@ -160,16 +160,17 @@ const io = require('socket.io')(server, {
     agent: false,
     transport: ['websocket'],
     cors: {
-        origin: "https://becode-star-tup.herokuapp.com"
+        origin: "https://wwww.becode-star-tup.herokuapp.com"
     }
 })
 
-const connectedUsers =  []
+let connectedUsers =  []
 
 const addUserConnected =  userId => {
     if(!connectedUsers.includes(userId)) {
         connectedUsers.push(userId)
     }
+
 }
 
 io.on("connection", (socket) => {
@@ -178,6 +179,7 @@ io.on("connection", (socket) => {
     socket.on('setup', (userData) => {
         socket.join(userData)
         addUserConnected(userData)
+        socket["userId"] = userData;
         socket.emit("connected", connectedUsers)
     })
 
@@ -188,7 +190,10 @@ io.on("connection", (socket) => {
     })
 
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+        let index = connectedUsers.indexOf(socket.userId)
+        connectedUsers.splice(index, 1)
+        console.log('user disconnected')
+        socket.emit('connected', connectedUsers)
     })
 
     socket.on('new message', (message) => {
