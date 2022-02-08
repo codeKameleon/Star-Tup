@@ -11,7 +11,7 @@ export default function Conversation() {
     // All messages / Send new message / Cookies / New message received / Conv id receiver name & id / Autoscroll / socketio
     const [conv, setConv] = useState([])
     const [message, setMessage] = useState({ content: "" })
-    const [cookies, setCookie, removeCookie] = useCookies(['userId']);
+    const [cookies] = useCookies(['userId']);
     const [updatedMessage, setUpdatedMessage] = useState(false)
     const { id, name, receiverId } = useParams();
     const scrollRef = useRef()
@@ -20,13 +20,14 @@ export default function Conversation() {
 
     // Socket io connection
     useEffect(() => {
-        socket = io.connect("https://becode-star-tup.herokuapp.com/", {
+        socket = io.connect("", {
             forceNew: false,
             secure: true,
             transports: ['websocket']
         });
         socket.emit('setup', user)
-        socket.on('connection', () => setSocketConnected(true))
+        socket.on('connected', () => setSocketConnected(true))
+        console.log(socketConnected);
     }, []);
 
     // Fetch conv & fetch conv on new message

@@ -9,7 +9,7 @@ import Avatar from './Avatar';
 export default function Contact() {
     // Conversation / Cookies / Navigate
     const [users, setUsers] = useState([])
-    const [cookies, setCookie, removeCookie] = useCookies(['userId']);
+    const [cookies] = useCookies(['userId']);
     const navigate = useNavigate()
 
     // Fetch all user
@@ -19,7 +19,7 @@ export default function Contact() {
                 console.log(res.data.users);
                 setUsers(res.data.users)
             })
-            .catch(err => navigate("/app/login") + alert("You need to login first"))
+        // .catch(err => navigate("/app/login") + alert("You need to login first"))
     }, []);
 
     // Start selected user to chat list
@@ -35,11 +35,11 @@ export default function Contact() {
     return (
         <>
             <Header page="Contacts" />
-            <main className='flex flex-col py-16 items-center bg-[#111b21] md:col-auto'>
+            <main className='flex flex-col py-16 items-center bg-[#111b21] md:col-auto w-full md:flex-row md:flex-wrap md:px-32'>
                 {/* if there is atleast one user map */}
                 {users.length > 0 ? users.map((user, index) => {
                     return (
-                        <article key={user._id} id={user._id} className='flex py-4 w-96 justify-between items-center my-2 h-20 bg-[#202c33] px-4 rounded-lg'>
+                        <article key={user._id} id={user._id} className='flex py-4 w-96 justify-between items-center my-2 h-20 bg-[#202c33] px-4 rounded-lg md:mr-4 md:my-2'>
                             <div className='flex'>
                                 <button className='w-12 h-12 rounded-full bg-white mr-4'>{Avatar(user.firstname[1])}</button>
                                 <div id={user._id}>

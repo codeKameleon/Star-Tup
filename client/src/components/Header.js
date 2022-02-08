@@ -7,7 +7,7 @@ import Avatar from './Avatar';
 export default function Header({ page }) {
     // User firstname / Cookies / Navigate
     const [firstname, setFirstname] = useState([])
-    const [cookies, setCookie, removeCookie] = useCookies(['userId']);
+    const [cookies] = useCookies(['userId']);
     const navigate = useNavigate()
 
     // Navigate to user profil

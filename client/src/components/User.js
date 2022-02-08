@@ -12,14 +12,13 @@ export default function User() {
         motto: ""
     })
     const [updateMessage, setUpdateMessage] = useState(false)
-    const [cookies, setCookie, removeCookie] = useCookies(['userId']);
+    const [cookies, removeCookie] = useCookies(['userId']);
     const navigate = useNavigate()
 
     // Fetch user info
     function fetch() {
         axios.get(`/api/users/${cookies.userId}`, { headers: { withCredentials: true } })
             .then(res => {
-                console.log(res);
                 setUser(res.data)
             })
             .catch(err => console.log(err))
@@ -40,11 +39,9 @@ export default function User() {
     }
 
     // Format date
-    function date() {
-        let date = new Date(user.birthdate).getDate()
-        let month = new Date(user.birthdate).getMonth() + 1
-        let year = new Date(user.birthdate).getFullYear()
-        return date + "/" + month + "/" + year
+    function date(date) {
+        const newDate = new Date(date)
+        return newDate.toLocaleDateString()
     }
 
     // Update user info
@@ -88,11 +85,11 @@ export default function User() {
                     <div className='flex bg-[#202c33] w-11/12 h-12 justify-center items-center rounded-full m-auto mt-4'>
                         <h1 className='text-2xl text-white'>Account info</h1>
                     </div>
-                    <div className='text-white mt-4 ml-14'>
+                    <div className='text-white w-3/4 m-auto mt-4'>
                         <p>First name : {user.firstname}</p>
                         <p>Last name : {user.lastname}</p>
                         <p>Email : {user.email}</p>
-                        <p>Birthdate : {!user.birthdate ? null : date()}</p>
+                        <p>Birthdate : {!user.birthdate ? null : date(user.birthdate)}</p>
                         <p>Motto : {user.motto === 'undefined' ? "" : user.motto}</p>
                     </div>
                 </div>
@@ -102,15 +99,15 @@ export default function User() {
                         <h1 className='text-2xl text-white'>Update info </h1>
                     </div>
                     <div className='flex flex-col mt-4 w-full justify-center'>
-                        <label className='text-white ml-14 mb-2'>Email :</label>
+                        <label className='text-white w-3/4 m-auto mb-2'>Email :</label>
                         <br />
                         <input type="email" placeholder='new email' className='w-3/4 h-8 rounded-full pl-4 m-auto mb-2' onChange={e => setUpdate({ ...update, email: e.target.value })} />
 
-                        <label className='text-white ml-14 mb-2'>Password :</label>
+                        <label className='text-white w-3/4 m-auto mb-2'>Password :</label>
                         <br />
                         <input type="password" placeholder='new password' className='w-3/4 h-8 rounded-full pl-4 m-auto mb-2' onChange={e => setUpdate({ ...update, password: e.target.value })} />
 
-                        <label className='text-white ml-14 mb-2 md:ml-48 xl:ml-72'>Motto :</label>
+                        <label className='text-white w-3/4 m-auto mb-2'>Motto :</label>
                         <br />
                         <input type="text" placeholder='new motto' className='w-3/4 h-8 rounded-full pl-4 m-auto mb-2' onChange={e => setUpdate({ ...update, motto: e.target.value })} />
                         <button className='p-2 w-24 bg-[#7aa5d2] rounded-lg m-auto mt-8' onClick={(e) => handleSubmit(e)}>Update</button>

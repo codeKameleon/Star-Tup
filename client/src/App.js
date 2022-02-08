@@ -15,6 +15,7 @@ function App() {
       <CookiesProvider>
         <Routes>
           {/* Redirect */}
+          <Route path='*' component={<Notfound />} />
           <Route exact path="/" element={<Navigate replace to="/app" />} />
           {/* Landing page */}
           <Route exact path="/app" element={<Home />} />
@@ -30,8 +31,6 @@ function App() {
           <Route exact path="/app/user" element={<User />} />
           {/* Conversation with conversation id / other member name / other member id*/}
           <Route exact path="/app/chat/:id/:name/:receiverId" element={<Conversation />} />
-          {/* Wrong route 404 page */}
-          <Route path="*" element={<Notfound />} />
         </Routes>
       </CookiesProvider>
     </div>
