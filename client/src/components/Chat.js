@@ -21,7 +21,7 @@ export default function Chat() {
 
   // Socket io connection
   useEffect(() => {
-    socket = io.connect("ws://localhost:9000", {
+    socket = io.connect("https://becode-star-tup.herokuapp.com", {
       forceNew: false,
       secure: true,
       transports: ['websocket']
