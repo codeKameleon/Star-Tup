@@ -17,7 +17,7 @@ export default function Chat() {
   const [load, setLoad] = useState(false)
   const [cookies] = useCookies(['userId']);
   const [socketConnected, setSocketConnected] = useState(false)
-  const [connected, setConnected] = useState([])
+  const [connected, setConnected] = useState()
 
   // Socket io connection
   useEffect(() => {
@@ -27,20 +27,21 @@ export default function Chat() {
       transports: ['websocket']
     });
     socket.emit('setup', cookies.userId)
-    socket.on('connected', (test) => {
-      console.log(test)
+    socket.on('connected', (users) => {
+      console.log("users : ", users);
+      setConnected(users)
     })
     console.log(socketConnected);
   }, []);
 
   // console.log(io.sockets.sockets)
   useEffect(() => {
-    axios.get("http://localhost:9000/api/conversations/")
+    axios.get("/api/conversations/")
       .then(res => {
         setConv(res.data)
         if ((data.length === 0)) {
           res.data.map(id => {
-            axios.get(`http://localhost:9000/api/messages/${id._id}/last`)
+            axios.get(`/api/messages/${id._id}/last`)
               .then(res2 => {
                 if (res2.data.length > 0) {
                   data.push({
@@ -117,7 +118,7 @@ export default function Chat() {
                       {/* Avatar icon */}
                       <button className='w-12 h-12 rounded-full bg-white mr-4'>
                         {Avatar(conv.members.find(member => member._id !== cookies.userId) ? conv.members.find(member => member._id !== cookies.userId).firstname[1] : conv.members[0].firstname[1])}
-                        {socketConnected === true ?
+                        {connected.includes(conv.members.find(member => member._id !== cookies.userId)._id) === true ?
                           <div className='bg-green-500 w-4 h-4 rounded-full ml-8 mb-8 bottom-3 relative' />
                           :
                           null

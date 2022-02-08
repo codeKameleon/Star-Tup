@@ -17,7 +17,7 @@ export default function User() {
 
     // Fetch user info
     function fetch() {
-        axios.get(`http://localhost:9000/api/users/${cookies.userId}`, { headers: { withCredentials: true } })
+        axios.get(`/api/users/${cookies.userId}`, { headers: { withCredentials: true } })
             .then(res => {
                 setUser(res.data)
             })
@@ -30,7 +30,7 @@ export default function User() {
 
     // Logout
     function logout() {
-        axios.get("http://localhost:9000/api/account/logout", { headers: { withCredentials: true } })
+        axios.get("/api/account/logout", { headers: { withCredentials: true } })
             .then(res => {
                 removeCookie('userId')
                 navigate("/app")
@@ -48,7 +48,7 @@ export default function User() {
     const handleSubmit = e => {
         e.preventDefault()
 
-        axios.put(`http://localhost:9000/api/users/${cookies.userId}`, update)
+        axios.put(`/api/users/${cookies.userId}`, update)
             .then(res => {
                 fetch()
                 setUpdateMessage(true)

@@ -19,7 +19,7 @@ export default function Login() {
   const handleSubmit = e => {
     e.preventDefault()
 
-    axios.post("http://localhost:9000/api/account/login", data, { credentials: 'same-origin' })
+    axios.post("/api/account/login", data, { credentials: 'same-origin' })
       .then(res => {
         setCookie('userId', res.data.user_id)
         navigate("/app/chat", { replace: true })

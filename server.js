@@ -22,7 +22,7 @@ const port = process.env.PORT
 connectDB()
 
 // Middlewares
-app.use(cors({ origin: "http://localhost:3000", credentials: true }))
+app.use(cors({ origin: "https://becode-star-tup.herokuapp.com", credentials: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser())
@@ -147,7 +147,7 @@ else {
 }
 
 // Handling non matching request from the client
-app.all('*', (req, res) => {
+app.all('*',(req, res) => {
     res.status(404).send({ message: "Page not found on the server" })
 })
 
@@ -160,21 +160,30 @@ const io = require('socket.io')(server, {
     agent: false,
     transport: ['websocket'],
     cors: {
-        origin: "ws://localhost:3000"
+        origin: "https://becode-star-tup.herokuapp.com"
     }
 })
+
+const connectedUsers =  []
+
+const addUserConnected =  userId => {
+    if(!connectedUsers.includes(userId)) {
+        connectedUsers.push(userId)
+    }
+}
 
 io.on("connection", (socket) => {
     console.log("connected to socket.io");
 
     socket.on('setup', (userData) => {
         socket.join(userData)
-        console.log('userData', userData);
-        socket.emit("connected")
+        addUserConnected(userData)
+        socket.emit("connected", connectedUsers)
     })
 
     socket.on('join chat', (conversation) => {
         socket.join(conversation)
+      
         console.log('User join conversation: ' + conversation);
     })
 
