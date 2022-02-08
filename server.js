@@ -164,17 +164,26 @@ const io = require('socket.io')(server, {
     }
 })
 
+const connectedUsers =  []
+
+const addUserConnected =  userId => {
+    if(!connectedUsers.includes(userId)) {
+        connectedUsers.push(userId)
+    }
+}
+
 io.on("connection", (socket) => {
     console.log("connected to socket.io");
 
     socket.on('setup', (userData) => {
         socket.join(userData)
-        console.log('userData', userData);
-        socket.emit("connected")
+        addUserConnected(userData)
+        socket.emit("connected", connectedUsers)
     })
 
     socket.on('join chat', (conversation) => {
         socket.join(conversation)
+      
         console.log('User join conversation: ' + conversation);
     })
 
