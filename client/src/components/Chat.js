@@ -31,7 +31,6 @@ export default function Chat() {
       console.log("users : ", users);
       setConnected(users)
     })
-    console.log(socketConnected);
   }, []);
 
   // console.log(io.sockets.sockets)
@@ -68,7 +67,7 @@ export default function Chat() {
         }
       })
       .catch(err => console.log(err))
-  }, []);
+  }, [connected]);
 
   // Date format
   function changeDate(date) {
