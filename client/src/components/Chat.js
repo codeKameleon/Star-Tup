@@ -21,26 +21,25 @@ export default function Chat() {
 
   // Socket io connection
   useEffect(() => {
-    socket = io.connect("https://becode-star-tup.herokuapp.com", {
+    socket = io.connect("ws://localhost:9000", {
       forceNew: false,
       secure: true,
       transports: ['websocket']
     });
     socket.emit('setup', cookies.userId)
     socket.on('connected', (users) => {
-      console.log("users : ", users);
       setConnected(users)
     })
   }, []);
 
   // console.log(io.sockets.sockets)
   useEffect(() => {
-    axios.get("/api/conversations/")
+    axios.get("http://localhost:9000/api/conversations/")
       .then(res => {
         setConv(res.data)
         if ((data.length === 0)) {
           res.data.map(id => {
-            axios.get(`/api/messages/${id._id}/last`)
+            axios.get(`http://localhost:9000/api/messages/${id._id}/last`)
               .then(res2 => {
                 if (res2.data.length > 0) {
                   data.push({
@@ -90,6 +89,18 @@ export default function Chat() {
     }
   }
 
+  const getLastMsg = (id) => {
+    const msg = lastMsg.find(msg => msg.id === id)
+    console.log(msg);
+    if (msg) {
+      if (msg.msg.length < 15) {
+        return <p className='text-white'>{msg.msg}</p>
+      } 
+      return <p className='text-white'>{msg.msg.substring(0, 15)}...</p>
+    }
+    return null 
+  }
+
   return (
     <>
       <Header page="Discussions" />
@@ -117,6 +128,7 @@ export default function Chat() {
                       {/* Avatar icon */}
                       <button className='w-12 h-12 rounded-full bg-white mr-4'>
                         {Avatar(conv.members.find(member => member._id !== cookies.userId) ? conv.members.find(member => member._id !== cookies.userId).firstname[1] : conv.members[0].firstname[1])}
+                        {/* Show if user is connected */}
                         {connected.includes(conv.members.find(member => member._id !== cookies.userId)._id) === true ?
                           <div className='bg-green-500 w-4 h-4 rounded-full ml-8 mb-8 bottom-3 relative' />
                           :
@@ -129,13 +141,12 @@ export default function Chat() {
                           {conv.members.find(member => member._id !== cookies.userId) ? conv.members.find(member => member._id !== cookies.userId).firstname : "Me"}
                         </h1>
                         {/* Last message */}
-                        {/* {lastMsg.find(msg => msg.id === conv._id ?
-                          <p className='text-sm text-slate-500 truncate'>
-                            {msg.sender === cookies.userId ? "Me : " : conv.members.find(member => member._id !== cookies.userId).firstname}
-                            {msg.msg.length >= 20 ? msg.msg.substring(0, 25) + "..." : msg.msg}
-                            {" - " + changeDate(msg.date)}
-                          </p>
-                          : null)} */}
+                        {getLastMsg(conv._id)}
+                        {/* {lastMsg.find(msg => {
+                          console.log(msg)
+                          if (msg.id === conv._id) return <p>{msg.msg}</p>
+                          else return <></>
+                        })} */}
                       </div>
                     </div>
                   </Link>
