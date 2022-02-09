@@ -180,6 +180,7 @@ io.on("connection", (socket) => {
         socket.join(userData)
         addUserConnected(userData)
         socket["userId"] = userData;
+        console.log(connectedUsers);
         socket.emit("connected", connectedUsers)
     })
 
