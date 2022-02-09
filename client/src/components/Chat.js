@@ -65,7 +65,7 @@ export default function Chat() {
                   setLoad(true)
                 }
               })
-              .catch(err2 => console.log(err2.response))
+              .catch(err => console.log(err))
           })
         }
         else if ((data.length > 0) && (lastMsg.length === 0)) {
