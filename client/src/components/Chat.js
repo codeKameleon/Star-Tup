@@ -21,7 +21,7 @@ export default function Chat() {
 
   // Socket io connection
   useEffect(() => {
-    socket = io.connect("ws://localhost:9000", {
+    socket = io.connect("https://becode-star-tup.herokuapp.com", {
       forceNew: false,
       secure: true,
       transports: ['websocket']
@@ -34,26 +34,34 @@ export default function Chat() {
 
   // console.log(io.sockets.sockets)
   useEffect(() => {
-    axios.get("http://localhost:9000/api/conversations/")
+    axios.get("/api/conversations/")
       .then(res => {
         setConv(res.data)
         if ((data.length === 0)) {
+          console.log(data.length);
           res.data.map(id => {
-            axios.get(`http://localhost:9000/api/messages/${id._id}/last`)
+            axios.get(`/api/messages/${id._id}/last`)
               .then(res2 => {
                 if (res2.data.length > 0) {
-                  data.push({
-                    id: res2.data[0].conversationId,
-                    msg: res2.data[0].content,
-                    date: new Date(res2.data[0].createdAt),
-                    sender: res2.data[0].sender
-                  })
-                  setLastMsg(data)
-                  if (data.length >= res.data.length) {
-                    setLoad(true)
+                  if (!data.includes(data.find(id => id.id === res2.data[0].conversationId))) {
+                    data.push({
+                      id: res2.data[0].conversationId,
+                      msg: res2.data[0].content,
+                      date: new Date(res2.data[0].createdAt),
+                      sender: res2.data[0].sender
+                    })
                   }
                 }
                 else {
+                  data.push({
+                    id: "",
+                    msg: "",
+                    date: "",
+                    sender: ""
+                  })
+                }
+                setLastMsg(data)
+                if (data.length >= res.data.length) {
                   setLoad(true)
                 }
               })
@@ -90,15 +98,16 @@ export default function Chat() {
   }
 
   const getLastMsg = (id) => {
-    const msg = lastMsg.find(msg => msg.id === id)
-    console.log(msg);
+    const msg = lastMsg.find(msg => msg.id === id._id)
     if (msg) {
-      if (msg.msg.length < 15) {
-        return <p className='text-white'>{msg.msg}</p>
-      } 
-      return <p className='text-white'>{msg.msg.substring(0, 15)}...</p>
+      if (msg.sender === cookies.userId) {
+        return <p className='text-sm text-slate-500 truncate'>Me : {msg.msg.length > 30 ? msg.msg.substring(0, 30) + "..." : msg.msg} - {changeDate(msg.date)}</p>
+      }
+      else {
+        return <p className='text-sm text-slate-500 truncate'>{id.members.find(member => member._id !== cookies.userId).firstname} : {msg.msg.length > 30 ? msg.msg.substring(0, 30) + "..." : msg.msg} - {changeDate(msg.date)}</p>
+      }
     }
-    return null 
+    return null
   }
 
   return (
@@ -131,8 +140,7 @@ export default function Chat() {
                         {/* Show if user is connected */}
                         {connected.includes(conv.members.find(member => member._id !== cookies.userId)._id) === true ?
                           <div className='bg-green-500 w-4 h-4 rounded-full ml-8 mb-8 bottom-3 relative' />
-                          :
-                          null
+                          : null
                         }
                       </button>
                       <div>
@@ -141,12 +149,7 @@ export default function Chat() {
                           {conv.members.find(member => member._id !== cookies.userId) ? conv.members.find(member => member._id !== cookies.userId).firstname : "Me"}
                         </h1>
                         {/* Last message */}
-                        {getLastMsg(conv._id)}
-                        {/* {lastMsg.find(msg => {
-                          console.log(msg)
-                          if (msg.id === conv._id) return <p>{msg.msg}</p>
-                          else return <></>
-                        })} */}
+                        {getLastMsg(conv)}
                       </div>
                     </div>
                   </Link>
