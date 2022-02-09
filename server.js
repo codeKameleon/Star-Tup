@@ -192,7 +192,9 @@ io.on("connection", (socket) => {
     socket.on('disconnect', () => {
         let index = connectedUsers.indexOf(socket.userId)
         connectedUsers.splice(index, 1)
-        console.log('user disconnected', socket.userId)
+        console.log(connectedUsers.splice(index, 1));
+        console.log(connectedUsers.splice(1, index));
+        console.log('user disconnected')
         socket.emit('connected', connectedUsers)
     })
 
