@@ -186,14 +186,13 @@ io.on("connection", (socket) => {
 
     socket.on('join chat', (conversation) => {
         socket.join(conversation)
-
         console.log('User join conversation: ' + conversation);
     })
 
     socket.on('disconnect', () => {
         let index = connectedUsers.indexOf(socket.userId)
         connectedUsers.splice(index, 1)
-        console.log('user disconnected')
+        console.log('user disconnected', socket.userId)
         socket.emit('connected', connectedUsers)
     })
 
