@@ -115,13 +115,13 @@ export default function Chat() {
         :
         <main className='flex flex-col py-16 items-center bg-[#111b21]'>
           {/* if conversation map */}
-          {console.log(load)}
           {conv.length > 0 ? conv.map((conv, index) => {
-            console.log(load, conv);
+            console.log(conv);
             return (
               <>
                 {/* If there is at least 2 member */}
                 {conv.members.length > 1 ?
+                  console.log(conv.members) +
                   // Link to conversation with conv id / other member name / other member id
                   <Link className='flex py-4 w-11/12 justify-between items-center my-1 h-20 bg-[#202c33] px-4 rounded-lg'
                     key={conv._id}
