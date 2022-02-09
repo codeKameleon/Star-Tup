@@ -160,7 +160,7 @@ const io = require('socket.io')(server, {
     agent: false,
     transport: ['websocket'],
     cors: {
-        origin: "https://becode-star-tup.herokuapp.com"
+        origin: "ws://becode-star-tup.herokuapp.com"
     }
 })
 

@@ -21,7 +21,7 @@ export default function Chat() {
 
   // Socket io connection
   useEffect(() => {
-    socket = io.connect("https://becode-star-tup.herokuapp.com", {
+    socket = io.connect("ws://becode-star-tup.herokuapp.com", {
       forceNew: false,
       secure: true,
       transports: ['websocket']
@@ -65,7 +65,7 @@ export default function Chat() {
                   setLoad(true)
                 }
               })
-              .catch(err2 => console.log(err2))
+              .catch(err2 => console.log(err2.response))
           })
         }
         else if ((data.length > 0) && (lastMsg.length === 0)) {
