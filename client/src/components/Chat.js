@@ -38,10 +38,8 @@ export default function Chat() {
         setConv(res.data)
         if ((data.length === 0)) {
           res.data.map(id => {
-            console.log(res.data);
             axios.get(`/api/messages/${id._id}/last`)
               .then(res2 => {
-                console.log(res2.data);
                 if (res2.data.length > 0) {
                   if (!data.includes(data.find(id => id.id === res2.data[0].conversationId))) {
                     data.push({
@@ -62,8 +60,6 @@ export default function Chat() {
                 }
                 setLastMsg(data)
                 if (data.length >= res.data.length) {
-                  console.log(data.length, res.data.length);
-                  console.log("conv log", conv);
                   setLoad(true)
                 }
               })
@@ -115,6 +111,7 @@ export default function Chat() {
       {load === false ?
         <p>loading</p>
         :
+        console.log("conv log", conv) +
         <main className='flex flex-col py-16 items-center bg-[#111b21]'>
           {/* if conversation map */}
           {conv.length > 0 ? conv.map((conv, index) => {
