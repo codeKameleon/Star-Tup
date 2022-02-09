@@ -147,7 +147,7 @@ else {
 }
 
 // Handling non matching request from the client
-app.all('*',(req, res) => {
+app.all('*', (req, res) => {
     res.status(404).send({ message: "Page not found on the server" })
 })
 
@@ -164,10 +164,10 @@ const io = require('socket.io')(server, {
     }
 })
 
-let connectedUsers =  []
+let connectedUsers = []
 
-const addUserConnected =  userId => {
-    if(!connectedUsers.includes(userId)) {
+const addUserConnected = userId => {
+    if (!connectedUsers.includes(userId)) {
         connectedUsers.push(userId)
     }
 
@@ -185,7 +185,7 @@ io.on("connection", (socket) => {
 
     socket.on('join chat', (conversation) => {
         socket.join(conversation)
-      
+
         console.log('User join conversation: ' + conversation);
     })
 

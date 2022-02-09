@@ -28,7 +28,6 @@ export default function Chat() {
     });
     socket.emit('setup', cookies.userId)
     socket.on('connected', (users) => {
-      console.log("users : ", users);
       setConnected(users)
     })
   }, []);
@@ -39,22 +38,30 @@ export default function Chat() {
       .then(res => {
         setConv(res.data)
         if ((data.length === 0)) {
+          console.log(data.length);
           res.data.map(id => {
             axios.get(`/api/messages/${id._id}/last`)
               .then(res2 => {
                 if (res2.data.length > 0) {
-                  data.push({
-                    id: res2.data[0].conversationId,
-                    msg: res2.data[0].content,
-                    date: new Date(res2.data[0].createdAt),
-                    sender: res2.data[0].sender
-                  })
-                  setLastMsg(data)
-                  if (data.length >= res.data.length) {
-                    setLoad(true)
+                  if (!data.includes(data.find(id => id.id === res2.data[0].conversationId))) {
+                    data.push({
+                      id: res2.data[0].conversationId,
+                      msg: res2.data[0].content,
+                      date: new Date(res2.data[0].createdAt),
+                      sender: res2.data[0].sender
+                    })
                   }
                 }
                 else {
+                  data.push({
+                    id: "",
+                    msg: "",
+                    date: "",
+                    sender: ""
+                  })
+                }
+                setLastMsg(data)
+                if (data.length >= res.data.length) {
                   setLoad(true)
                 }
               })
@@ -90,6 +97,19 @@ export default function Chat() {
     }
   }
 
+  const getLastMsg = (id) => {
+    const msg = lastMsg.find(msg => msg.id === id._id)
+    if (msg) {
+      if (msg.sender === cookies.userId) {
+        return <p className='text-sm text-slate-500 truncate'>Me : {msg.msg.length > 30 ? msg.msg.substring(0, 30) + "..." : msg.msg} - {changeDate(msg.date)}</p>
+      }
+      else {
+        return <p className='text-sm text-slate-500 truncate'>{id.members.find(member => member._id !== cookies.userId).firstname} : {msg.msg.length > 30 ? msg.msg.substring(0, 30) + "..." : msg.msg} - {changeDate(msg.date)}</p>
+      }
+    }
+    return null
+  }
+
   return (
     <>
       <Header page="Discussions" />
@@ -117,10 +137,10 @@ export default function Chat() {
                       {/* Avatar icon */}
                       <button className='w-12 h-12 rounded-full bg-white mr-4'>
                         {Avatar(conv.members.find(member => member._id !== cookies.userId) ? conv.members.find(member => member._id !== cookies.userId).firstname[1] : conv.members[0].firstname[1])}
+                        {/* Show if user is connected */}
                         {connected.includes(conv.members.find(member => member._id !== cookies.userId)._id) === true ?
                           <div className='bg-green-500 w-4 h-4 rounded-full ml-8 mb-8 bottom-3 relative' />
-                          :
-                          null
+                          : null
                         }
                       </button>
                       <div>
@@ -129,13 +149,7 @@ export default function Chat() {
                           {conv.members.find(member => member._id !== cookies.userId) ? conv.members.find(member => member._id !== cookies.userId).firstname : "Me"}
                         </h1>
                         {/* Last message */}
-                        {/* {lastMsg.find(msg => msg.id === conv._id ?
-                          <p className='text-sm text-slate-500 truncate'>
-                            {msg.sender === cookies.userId ? "Me : " : conv.members.find(member => member._id !== cookies.userId).firstname}
-                            {msg.msg.length >= 20 ? msg.msg.substring(0, 25) + "..." : msg.msg}
-                            {" - " + changeDate(msg.date)}
-                          </p>
-                          : null)} */}
+                        {getLastMsg(conv)}
                       </div>
                     </div>
                   </Link>
