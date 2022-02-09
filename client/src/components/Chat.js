@@ -111,7 +111,6 @@ export default function Chat() {
       {load === false ?
         <p>loading</p>
         :
-        console.log("conv log", conv) +
         <main className='flex flex-col py-16 items-center bg-[#111b21]'>
           {/* if conversation map */}
           {conv.length > 0 ? conv.map((conv, index) => {
@@ -133,6 +132,10 @@ export default function Chat() {
                       <button className='w-12 h-12 rounded-full bg-white mr-4'>
                         {Avatar(conv.members.find(member => member._id !== cookies.userId) ? conv.members.find(member => member._id !== cookies.userId).firstname[1] : conv.members[0].firstname[1])}
                         {/* Show if user is connected */}
+                        {console.log("connected", connected),
+                          console.log("conv find", conv.members.find(member => member._id !== cookies.userId)._id)
+                        }
+
                         {connected.includes(conv.members.find(member => member._id !== cookies.userId)._id) === true ?
                           <div className='bg-green-500 w-4 h-4 rounded-full ml-8 mb-8 bottom-3 relative' />
                           : null
