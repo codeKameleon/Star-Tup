@@ -27,7 +27,6 @@ export default function Chat() {
     });
     socket.emit('setup', cookies.userId)
     socket.on('connected', (users) => {
-      console.log("connected", connected);
       setConnected(users)
     })
   }, []);
@@ -135,6 +134,7 @@ export default function Chat() {
                     <div className='flex w-full items-center'>
                       {/* Avatar icon */}
                       <button className='w-12 h-12 rounded-full bg-white mr-4'>
+                        {console.log("connected", connected)}
                         {Avatar(conv.members.find(member => member._id !== cookies.userId) ? conv.members.find(member => member._id !== cookies.userId).firstname[1] : conv.members[0].firstname[1])}
                         {/* Show if user is connected */}
                         {!connected ? null : connected.includes(conv.members.find(member => member._id !== cookies.userId)._id) === true ?
