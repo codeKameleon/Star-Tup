@@ -27,7 +27,6 @@ export default function Conversation() {
         });
         socket.emit('setup', user)
         socket.on('connected', () => setSocketConnected(true))
-        console.log(socketConnected);
     }, []);
 
     // Fetch conv & fetch conv on new message

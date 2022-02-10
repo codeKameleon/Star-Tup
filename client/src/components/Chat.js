@@ -72,7 +72,7 @@ export default function Chat() {
         }
       })
       .catch(err => console.log(err))
-  }, []);
+  }, [connected]);
 
   // Date format
   function changeDate(date) {
