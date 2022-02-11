@@ -16,25 +16,19 @@ function App() {
         <Routes>
           {/* Redirect */}
           <Route path='*' component={<Notfound />} />
-          <Route exact path="/" element={<Navigate replace to="/app/" />} />
-          <Route exact path="/app" element={<Navigate replace to="/app/" />} />
+          <Route exact path="/" element={<Navigate replace to="/app" />} />
           {/* Landing page */}
-          <Route exact path="/app/" element={<Home />} />
+          <Route exact path="/app" element={<Home />} />
           {/* Register */}
           <Route exact path="/app/register" element={<Register />} />
-          <Route exact path="/regiser" element={<Navigate replace to="/app/register" />} />
           {/* Login */}
           <Route exact path="/app/login" element={<Login />} />
-          <Route exact path="/login" element={<Navigate replace to="/app/login" />} />
           {/* Landing page after login & all chat page */}
           <Route exact path="/app/chat" element={<Chat />} />
-          <Route exact path="/chat" element={<Navigate replace to="/app/chat" />} />
           {/* All user */}
           <Route exact path="/app/contact" element={<Contact />} />
-          <Route exact path="/contact" element={<Navigate replace to="/app/contact" />} />
           {/* User profil */}
           <Route exact path="/app/user" element={<User />} />
-          <Route exact path="/user" element={<Navigate replace to="/app/contact" />} />
           {/* Conversation with conversation id / other member name / other member id*/}
           <Route exact path="/app/chat/:id/:name/:receiverId" element={<Conversation />} />
         </Routes>
