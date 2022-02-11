@@ -12,7 +12,6 @@ const messageRoutes = require('./routes/messageRoutes')
 
 const path = require("path")
 
-
 const ORIGIN_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://becode-star-tup.herokuapp.com"
 
 // Set up environment variables
@@ -136,16 +135,11 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, "/client/build")));
 
     app.get("/", (req, res) => {
-        res.redirect("/app/")
+        res.redirect("/app")
     })
 
     app.get('/app/*', (req, res) => {
         res.sendFile(path.join(__dirname, "client/build/index.html"))
-    })
-
-    // Handling non matching request from the client
-    app.all('*', (req, res) => {
-        res.status(404).send({ message: "Page not found on the server" })
     })
 }
 else {
@@ -154,6 +148,10 @@ else {
     })
 }
 
+// Handling non matching request from the client
+app.all('*', (req, res) => {
+    res.status(404).send({ message: "Page not found on the server" })
+})
 
 // Server
 const server = app.listen(port, () => console.log(`Server started and running at http://localhost:${port}`))
