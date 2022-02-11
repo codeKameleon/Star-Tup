@@ -16,7 +16,7 @@ function App() {
         <Routes>
           {/* Redirect */}
           <Route path='*' component={<Notfound />} />
-          <Route exact path="/" element={<Navigate replace to="/app" />} />
+          <Route exact path="/" element={<Navigate replace to="/app/" />} />
           {/* Landing page */}
           <Route exact path="/app" element={<Home />} />
           {/* Register */}
