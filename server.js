@@ -139,6 +139,10 @@ if (process.env.NODE_ENV === 'production') {
         res.redirect("/app/")
     })
 
+    app.get("/app", (req, res) => {
+        res.redirect("/app/")
+    })
+
     app.get('/app/*', (req, res) => {
         res.sendFile(path.join(__dirname, "client/build/index.html"))
     })
