@@ -15,10 +15,9 @@ function App() {
       <CookiesProvider>
         <Routes>
           {/* Redirect */}
-          <Route path='*' component={<Notfound />} />
-          <Route exact path="/" element={<Navigate replace to="/app/" />} />
-          <Route exact path="/app" element={<Navigate replace to="/app/" />} />
+          <Route path="*" element={<Notfound />} />
           {/* Landing page */}
+          <Route exact path="/" element={<Navigate replace to="/app" />} />
           <Route exact path="/app/" element={<Home />} />
           {/* Register */}
           <Route exact path="/app/register" element={<Register />} />
