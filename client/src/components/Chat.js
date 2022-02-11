@@ -20,7 +20,7 @@ export default function Chat() {
 
   // Socket io connection
   useEffect(() => {
-    socket = io.connect("https://becode-star-tup.herokuapp.com/", {
+    socket = io.connect(process.env.REACT_APP_SOCKET, {
       forceNew: false,
       secure: true,
       transports: ['websocket']
@@ -33,12 +33,12 @@ export default function Chat() {
 
   // console.log(io.sockets.sockets)
   useEffect(() => {
-    axios.get("/api/conversations/")
+    axios.get(`${process.env.REACT_APP_PREFIX_API_URL}/api/conversations/`)
       .then(res => {
         setConv(res.data)
         if ((data.length === 0)) {
           res.data.map(id => {
-            axios.get(`/api/messages/${id._id}/last`)
+            axios.get(`${process.env.REACT_APP_PREFIX_API_URL}/api/messages/${id._id}/last`)
               .then(res2 => {
                 if (res2.data.length > 0) {
                   if (!data.includes(data.find(id => id.id === res2.data[0].conversationId))) {

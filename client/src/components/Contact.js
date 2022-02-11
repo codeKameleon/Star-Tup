@@ -14,7 +14,7 @@ export default function Contact() {
 
     // Fetch all user
     useEffect(() => {
-        axios.get(`/api/users`)
+        axios.get(`${process.env.REACT_APP_PREFIX_API_URL}/api/users`)
             .then(res => {
                 console.log(res.data.users);
                 setUsers(res.data.users)
@@ -24,7 +24,7 @@ export default function Contact() {
 
     // Start selected user to chat list
     function startConv(e) {
-        axios.post(`/api/conversations`, [e.target.id], { headers: { withCredentials: true }, credentials: 'same-origin' })
+        axios.post(`${process.env.REACT_APP_PREFIX_API_URL}/api/conversations`, [e.target.id], { headers: { withCredentials: true }, credentials: 'same-origin' })
             .then(res => {
                 navigate("/app/chat/" + res.data._id + "/" + e.target.name + "/" + e.target.id, { replace: true })
             })
