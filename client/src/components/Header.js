@@ -17,7 +17,7 @@ export default function Header({ page }) {
 
     // Fetch user info
     useEffect(() => {
-        axios.get(`/api/users/${cookies.userId}`)
+        axios.get(`${process.env.REACT_APP_PREFIX_API_URL}/api/users/${cookies.userId}`)
             .then(res => {
                 setFirstname(res.data.firstname[1]);
             })

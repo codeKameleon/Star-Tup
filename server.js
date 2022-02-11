@@ -12,6 +12,9 @@ const messageRoutes = require('./routes/messageRoutes')
 
 const path = require("path")
 
+
+const ORIGIN_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://becode-star-tup.herokuapp.com"
+
 // Set up environment variables
 dotenv.config()
 
@@ -22,7 +25,7 @@ const port = process.env.PORT
 connectDB()
 
 // Middlewares
-app.use(cors({ origin: "http://localhost:3000", credentials: true }))
+app.use(cors({ origin: ORIGIN_URL, credentials: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser())
@@ -160,7 +163,7 @@ const io = require('socket.io')(server, {
     agent: false,
     transport: ['websocket'],
     cors: {
-        origin: "ws://becode-star-tup.herokuapp.com"
+        origin: ORIGIN_URL
     }
 })
 
@@ -170,7 +173,6 @@ const addUserConnected = userId => {
     if (!connectedUsers.includes(userId)) {
         connectedUsers.push(userId)
     }
-
 }
 
 io.on("connection", (socket) => {
