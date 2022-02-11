@@ -130,7 +130,7 @@ app.get('/api', (req, res) => res.send({
     ]
 }))
 
-// HEROKU FULLSTACK DEPLOY
+// Heroku Deployment
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, "/client/build")));
 
@@ -156,6 +156,8 @@ app.all('*', (req, res) => {
 // Server
 const server = app.listen(port, () => console.log(`Server started and running at http://localhost:${port}`))
 
+
+// Socket.io
 const io = require('socket.io')(server, {
     pingTimeout: 60000,
     log: false,
@@ -181,24 +183,20 @@ io.on("connection", (socket) => {
         socket.join(userData)
         addUserConnected(userData)
         socket["userId"] = userData;
-        console.log(connectedUsers);
         socket.emit("connected", connectedUsers)
     })
 
     socket.on('join chat', (conversation) => {
         socket.join(conversation)
-        console.log('User join conversation: ' + conversation);
     })
 
     socket.on('disconnect', () => {
         let index = connectedUsers.indexOf(socket.userId)
         connectedUsers.splice(index, 1)
-        console.log('user disconnected')
         socket.emit('connected', connectedUsers)
     })
 
     socket.on('new message', (message) => {
-        console.log('message', message)
         socket.to(message.receiverId).emit("message received", message.message.content);
     })
 })
